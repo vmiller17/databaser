@@ -62,7 +62,9 @@ insert into Users(username, fullName, address, telephoneNbr)
 values('jojo',    'Johannes', 'Lund',   '123');
 
 insert into Users(username, fullName, address, telephoneNbr)
-values('fru',     'Carro',    'Lund',   '123');
+values('fru',     'Carro',    'Lund',   '123'),
+      ('granne',  'Mateusz',  'Lund',   '456'); 
+
 
 
 -- Insert data into Movies
