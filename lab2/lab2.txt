@@ -1,0 +1,10 @@
+[[ Lab 2 ]]
+
+_resNbr_ = primary key
+__userUsername__ = foreign key
+
+Reservations(_resNbr_, __userUsername__, __performanceDate__, __performanceMovieTitle__)
+Performances(date, bookings, __movieTitle__, __theaterName__)
+Users(_username_, fullName, address, telephoneNbr)
+Theaters(_name_, nbrOfSeats)
+Movies(_title_)
