@@ -135,9 +135,9 @@ values('fru',    '2015-2-5', 'James Bond');
 
 -- insert two movie theaters with the same name
 insert into Theaters(name,nbrOfSeats)
-  values ('SF', 200);
-/*--insert into Movies(title)
---values('James Bond');
+values ('SF', 200);
+insert into Movies(title)
+values('James Bond');
 
 -- insert two performances of the 
 -- same movie on the same date
@@ -170,4 +170,4 @@ values('fru',  'Victor',   'Lund',   '123');
 
 -- Since there's a time gap between checking available
 -- spots and actually making the reservation, it's 
--- possible that the performances could be over filled.*/
+-- possible that the performances could be over filled.
