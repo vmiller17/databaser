@@ -13,10 +13,10 @@ set foreign_key_checks = 1;
 
 -- Create the tables
 create table Users (
-  username        char(20),
-  fullName        char(40),
+  username        varchar(20),
+  fullName        varchar(40),
   address         varchar(256),
-  telephoneNbr    char(20),
+  telephoneNbr    varchar(20),
   primary key (username)
 );
 
@@ -45,7 +45,7 @@ create table Performances (
 
 create table Reservations (
   resNbr                  integer auto_increment,
-  userUsername            char(20),
+  userUsername            varchar(20),
   performanceDate         date,
   performanceMovieTitle   varchar(128),
   primary key (resNbr),
