@@ -6,11 +6,11 @@ public class Performance {
 	private int bookings;
 
 
-	public Performance(String date, String movie, Sting theaterName, int bookings) {
+	public Performance(String date, String movie, Sting theaterName, int availableSeats) {
 		this.date = date;
 		this.movie = movie;
 		this.theaterName = theaterName;
-		this.bookings = bookings;
+		this.availableSeats = availableSeats;
 
 	}
 
@@ -27,8 +27,8 @@ public class Performance {
 		return theaterName;
 	}
 
-	public int getBookings() {
-		return bookings;
+	public int getAvailableSeats() {
+		return availableSeats;
 	}
 
 

@@ -170,8 +170,12 @@ public class BookingPane extends BasicPane {
 	/**
 	 * Fetch movie names from the database and display them in the name list.
 	 */
-	private void fillNameList() {
+	private void fillNameList() {  					// Done
 		nameListModel.removeAllElements();
+		List<String> movies = db.getMovies();
+		for (String movie : movies) {
+			nameListModel.addElement(movie);
+		}
         /* --- insert own code here --- */
 	}
 
@@ -179,8 +183,12 @@ public class BookingPane extends BasicPane {
 	 * Fetch performance dates from the database and display them in the date
 	 * list.
 	 */
-	private void fillDateList() {
+	private void fillDateList(String movieName) {  // Done
 		dateListModel.removeAllElements();
+		List<Performance> performances = db.getPerfomances();
+		for (Performance p : performances) {
+			dateListModel.addElement(p.getDate());
+		}
         /* --- insert own code here --- */
 	}
 
@@ -209,7 +217,8 @@ public class BookingPane extends BasicPane {
 			if (nameList.isSelectionEmpty()) {
 				return;
 			}
-			String movieName = nameList.getSelectedValue();
+			String movieName = nameList.getSelectedValue();  // Done
+			fillDateList(movieName);
 			/* --- insert own code here --- */
 		}
 	}
@@ -232,6 +241,13 @@ public class BookingPane extends BasicPane {
 			}
 			String movieName = nameList.getSelectedValue();
 			String date = dateList.getSelectedValue();
+			Performance performance = db.getPerfomance(movieName,date);
+			fields[MOVIE_NAME].setText(movieName);
+			fields[PERF_DATE].setText(date);
+			fields[THEATER_NAME].setText(performance.getTheaterName());
+			fields[FREE_SEATS].setText(performance.getAvailableSeats());
+
+
 			/* --- insert own code here --- */
 		}
 	}
