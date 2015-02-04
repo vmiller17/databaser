@@ -67,7 +67,7 @@ public class Database {
 	 * @return true if the connection has been established
 	 */
 	public boolean isConnected() {
-		return conn != null;
+	   return conn != null;
 	}
 
 	// Here Victor has started to add his methods.
@@ -78,7 +78,7 @@ public class Database {
 	* @return true if logged in, else false.
 	*/
 	public boolean login(String username) {
-		return false
+	   return false
 
 	}
 
@@ -89,7 +89,7 @@ public class Database {
 	* @return true if a reservation is made. False if not.
 	*/
 	public boolean makeReservation(String date, Sting movie, String username) {
-		return false
+	   return false
 	}
 
 
@@ -99,7 +99,7 @@ public class Database {
 	* @return List<String> with the list of movies availible. Null if no moview are availible.
 	*/
 	public List<String> getMovies() {
-		return null
+	   return null
 	}
 
 
@@ -108,7 +108,7 @@ public class Database {
 	* @return List<Performance> if there is any performances. Null if none. 
 	*/
 	public List<Performance> getPerfomances(String title) {
-		return null
+	   return null
 	} 
 
 	/* --- insert own code here --- */
