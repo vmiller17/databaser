@@ -70,6 +70,47 @@ public class Database {
 		return conn != null;
 	}
 
+	// Here Victor has started to add his methods.
+
+	/**
+	* Login to GUI.  
+	*
+	* @return true if logged in, else false.
+	*/
+	public boolean login(String username) {
+		return false
+
+	}
+
+
+	/**
+	* Makes a reservation for a movie performance.
+	*
+	* @return true if a reservation is made. False if not.
+	*/
+	public boolean makeReservation(String date, Sting movie, String username) {
+		return false
+	}
+
+
+	/**
+	* Gets the list of movies that are available for viewing.
+	*
+	* @return List<String> with the list of movies availible. Null if no moview are availible.
+	*/
+	public List<String> getMovies() {
+		return null
+	}
+
+
+	/**
+	* Returns all performances concerning a certain title.
+	* @return List<Performance> if there is any performances. Null if none. 
+	*/
+	public List<Performance> getPerfomances(String title) {
+		return null
+	} 
+
 	/* --- insert own code here --- */
 
 }
