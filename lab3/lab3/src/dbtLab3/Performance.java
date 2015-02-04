@@ -1,12 +1,14 @@
+package dbtLab3;
+
 public class Performance {
 
 	private String date;
 	private String movie;
 	private String theaterName;
-	private int bookings;
+	private int availableSeats;
 
 
-	public Performance(String date, String movie, Sting theaterName, int availableSeats) {
+	public Performance(String date, String movie, String theaterName, int availableSeats) {
 		this.date = date;
 		this.movie = movie;
 		this.theaterName = theaterName;
@@ -15,7 +17,7 @@ public class Performance {
 	}
 
 
-	public Sting getDate() {
+	public String getDate() {
 		return date;
 	}
 

@@ -2,6 +2,8 @@ package dbtLab3;
 
 import javax.swing.*;
 import javax.swing.event.*;
+import java.util.List;
+
 
 import java.awt.*;
 import java.awt.event.*;
@@ -185,7 +187,7 @@ public class BookingPane extends BasicPane {
 	 */
 	private void fillDateList(String movieName) {  // Done
 		dateListModel.removeAllElements();
-		List<Performance> performances = db.getPerfomances();
+		List<Performance> performances = db.getPerfomances(movieName);
 		for (Performance p : performances) {
 			dateListModel.addElement(p.getDate());
 		}
@@ -245,7 +247,7 @@ public class BookingPane extends BasicPane {
 			fields[MOVIE_NAME].setText(movieName);
 			fields[PERF_DATE].setText(date);
 			fields[THEATER_NAME].setText(performance.getTheaterName());
-			fields[FREE_SEATS].setText(performance.getAvailableSeats());
+			fields[FREE_SEATS].setText(Integer.toString(performance.getAvailableSeats()));
 
 
 			/* --- insert own code here --- */

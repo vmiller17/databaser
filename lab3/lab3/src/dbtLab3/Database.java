@@ -1,5 +1,5 @@
 package dbtLab3;
-
+import java.util.*;
 import java.sql.*;
 
 /**
@@ -70,7 +70,7 @@ public class Database {
 	   return conn != null;
 	}
 
-	// Here Victor has started to add his methods.
+	// Here Victor and Johanes has started to add their methods.
 
 	/**
 	* Login to GUI.  
@@ -78,15 +78,24 @@ public class Database {
 	* @return true if logged in, else false.
 	*/
 	public boolean login(String username) {
-    String sql = "select count(*) c " 
-      + "from Users "
-      + "where username = ?";
+		String sql = "select count(*) c " 
+				+ "from Users "
+				+ "where username = ?";
 
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ps.setString(1, username);
-    ResultSet rs = ps.executeQuery();
-    return rs.getInt("c") == 1;
+    
+		boolean success = false;
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ResultSet rs = ps.executeQuery();
+			success = rs.getInt("c") == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    
+		return success;
 	}
+
 
 
 	/**
@@ -94,7 +103,7 @@ public class Database {
 	*
 	* @return true if a reservation is made. False if not.
 	*/
-	public boolean makeReservation(String date, Sting movie, String username) {
+	public boolean makeReservation(String date, String movie, String username) {
 	   return false;
 	}
 
@@ -106,21 +115,26 @@ public class Database {
 	*/
 	public List<String> getMovies() {
 
-    // String sql = "select movieTitle "
-    //   + "from Performances";
-    
-    String sql = "select title " 
-      + "from Movies";
+		// String sql = "select movieTitle "
+		//   + "from Performances";
 
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ResultSet rs = ps.executeQuery();
-    List<String> movieList = new ArrayList<String>();
+		String sql = "select title " 
+				+ "from Movies";
 
-    while (rs.next()) {
-      movieList.add(rs.getString("title"));
-    }
+		List<String> movieList = new ArrayList<String>();
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				movieList.add(rs.getString("title"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	  return movieList;
+		return movieList;
 	}
 
 
@@ -129,42 +143,57 @@ public class Database {
 	* @return List<Performance> if there is any performances. Null if none. 
 	*/
 	public List<Performance> getPerfomances(String title) {
-    String sql = "select movieTitle, date, theaterName, bookings, nbrOfSeats "
-      + "from Performances,Theaters "
-      + "where movieTitle = ? "
-      + "and Performances.theaterName = Theaters.name";
+		String sql = "select movieTitle, date, theaterName, bookings, nbrOfSeats "
+				+ "from Performances,Theaters "
+				+ "where movieTitle = ? "
+				+ "and Performances.theaterName = Theaters.name";
 
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ps.setString(1, movieName);
-    ResultSet rs = ps.executeQuery();
-    List<Performance> performanceList = new ArrayList<Performance>();
+		
+		List<Performance> performanceList = new ArrayList<Performance>();
+		try {
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setString(1, title);
+		ResultSet rs = ps.executeQuery();
+		
 
-    while (rs.next()) {
-      performanceList.add(new Performance(rs.getString("date")
-            , rs.getString("movieTitle")
-            , rs.getString("theaterName")
-            , rs.getInt("nbrOfSeats") - rs.getInt("bookings"));
-    }
+		while (rs.next()) {
+			performanceList.add(new Performance(rs.getString("date")
+					, rs.getString("movieTitle")
+					, rs.getString("theaterName")
+					, rs.getInt("nbrOfSeats") - rs.getInt("bookings")));
+		}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	  return performanceList;
+		return performanceList;
 	} 
 
 
 	public Performance getPerfomance(String movieName, String date) {
-    String sql = "select theaterName, bookings, nbrOfSeats "
-      + "from Performances,Theaters "
-      + "where movieTitle = ? "
-      + "and date = ? "
-      + "and Performances.theaterName = Theaters.name";
-    PreparedStatement ps = conn.prepareStatement(sql);
-    ps.setString(1, movieName);
-    ps.setString(2, date);
-    ResultSet rs = ps.executeQuery();
+		String sql = "select theaterName, bookings, nbrOfSeats "
+				+ "from Performances,Theaters "
+				+ "where movieTitle = ? "
+				+ "and date = ? "
+				+ "and Performances.theaterName = Theaters.name";
+		
+		Performance performance = null;
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, movieName);
+			ps.setString(2, date);
+			ResultSet rs = ps.executeQuery();
 
-    String theaterName = rs.getString("theaterName");
-    int availableSeats  = rs.getInt("nbrOfSeats") - rs.getInt("bookings");
+			String theaterName = rs.getString("theaterName");
+			int availableSeats  = rs.getInt("nbrOfSeats") - rs.getInt("bookings");
+			performance = new Performance(date, movieName, theaterName, availableSeats);
 
-    return new Performance(date, movieName, theaterName, availableSeats);
+		} catch (SQLException e) {
+			e.printStackTrace(); 
+		}
+
+		return performance;
 
 	}
 }
