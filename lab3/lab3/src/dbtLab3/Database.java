@@ -78,8 +78,14 @@ public class Database {
 	* @return true if logged in, else false.
 	*/
 	public boolean login(String username) {
-	   return false;
+    String sql = "select count(*) c " 
+      + "from Users "
+      + "where username = ?";
 
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, username);
+    ResultSet rs = ps.executeQuery();
+    return rs.getInt("c") == 1;
 	}
 
 
@@ -99,7 +105,22 @@ public class Database {
 	* @return List<String> with the list of movies availible. Null if no moview are availible.
 	*/
 	public List<String> getMovies() {
-	   return null;
+
+    // String sql = "select movieTitle "
+    //   + "from Performances";
+    
+    String sql = "select title " 
+      + "from Movies";
+
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ResultSet rs = ps.executeQuery();
+    List<String> movieList = new ArrayList<String>();
+
+    while (rs.next()) {
+      movieList.add(rs.getString("title"));
+    }
+
+	  return movieList;
 	}
 
 
@@ -108,14 +129,42 @@ public class Database {
 	* @return List<Performance> if there is any performances. Null if none. 
 	*/
 	public List<Performance> getPerfomances(String title) {
-	   return null;
+    String sql = "select movieTitle, date, theaterName, bookings, nbrOfSeats "
+      + "from Performances,Theaters "
+      + "where movieTitle = ? "
+      + "and Performances.theaterName = Theaters.name";
+
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, movieName);
+    ResultSet rs = ps.executeQuery();
+    List<Performance> performanceList = new ArrayList<Performance>();
+
+    while (rs.next()) {
+      performanceList.add(new Performance(rs.getString("date")
+            , rs.getString("movieTitle")
+            , rs.getString("theaterName")
+            , rs.getInt("nbrOfSeats") - rs.getInt("bookings"));
+    }
+
+	  return performanceList;
 	} 
 
 
-	public Performance getPerfomance(String movieName, String data) {
-		return null;
+	public Performance getPerfomance(String movieName, String date) {
+    String sql = "select theaterName, bookings, nbrOfSeats "
+      + "from Performances,Theaters "
+      + "where movieTitle = ? "
+      + "and date = ? "
+      + "and Performances.theaterName = Theaters.name";
+    PreparedStatement ps = conn.prepareStatement(sql);
+    ps.setString(1, movieName);
+    ps.setString(2, date);
+    ResultSet rs = ps.executeQuery();
+
+    String theaterName = rs.getString("theaterName");
+    int availableSeats  = rs.getInt("nbrOfSeats") - rs.getInt("bookings");
+
+    return new Performance(date, movieName, theaterName, availableSeats);
+
 	}
-
-	/* --- insert own code here --- */
-
 }
