@@ -87,7 +87,7 @@ public class UserLoginPane extends BasicPane {
 				currentUser.loginAs(userId);
 				displayMessage("Logged in as " + userId);
 			} else {
-				displayMessage(userId + " is not in the database.");
+				displayMessage(userId + " is not in the database.")
 			}
 			
 			/* --- insert own code here --- */

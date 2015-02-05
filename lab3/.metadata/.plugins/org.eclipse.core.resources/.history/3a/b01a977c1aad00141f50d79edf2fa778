@@ -88,7 +88,7 @@ public class Database {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
+			rs.next()
 			success = rs.getInt("c") == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();

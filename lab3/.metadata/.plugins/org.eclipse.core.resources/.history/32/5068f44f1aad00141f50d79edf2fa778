@@ -84,10 +84,7 @@ public class UserLoginPane extends BasicPane {
 			String userId = fields[USER_ID].getText();
 			CurrentUser currentUser = CurrentUser.instance();
 			if (db.login(userId)) {
-				currentUser.loginAs(userId);
-				displayMessage("Logged in as " + userId);
-			} else {
-				displayMessage(userId + " is not in the database.");
+				currentUser.loginAs(userId)
 			}
 			
 			/* --- insert own code here --- */
