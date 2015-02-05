@@ -101,10 +101,23 @@ values
   ('2015-2-5', 'Jaws', 'SF'),
   ('2015-2-6', 'Jaws', 'Filmstaden Malmo'),
   ('2015-2-7', 'Jaws', 'Vildanden'),
-  ('2015-2-8', 'Jaws', 'Filmstaden Malmo'),
+  ('2015-2-8', 'Jaws', 'Filmstaden Malmo');
 
 insert into Performances(date, movieTitle, theaterName)
-values('2015-2-5', 'James Bond', 'Vildanden');
+values
+  ('2015-2-5', 'Home Alone', 'Vildanden'),
+  ('2015-2-6', 'Home Alone', 'Vildanden'),
+  ('2015-2-7', 'Home Alone', 'SF'),
+  ('2015-2-8', 'Home Alone', 'Vildanden'),
+  ('2015-2-9', 'Home Alone', 'Filmstaden Malmo');
+
+insert into Performances(date, movieTitle, theaterName)
+values
+  ('2015-2-5', 'Jaws', 'Vildanden'),
+  ('2015-2-6', 'Jaws', 'Vildanden'),
+  ('2015-2-7', 'Jaws', 'SF'),
+  ('2015-2-8', 'Jaws', 'Vildanden'),
+  ('2015-2-9', 'Jaws', 'Filmstaden Malmo');
 
 
 
