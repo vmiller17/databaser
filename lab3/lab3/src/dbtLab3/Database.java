@@ -105,7 +105,23 @@ public class Database {
 	* @return true if a reservation is made. False if not.
 	*/
 	public boolean makeReservation(String date, String movie, String username) {
-	   return false;
+		String sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) " 
+				+ "values(?,?,?)";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, date);
+			ps.setString(3, movie);
+			int r = ps.executeUpdate();
+			return r == 1;
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 

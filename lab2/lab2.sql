@@ -120,7 +120,7 @@ values
   ('2015-2-9', 'Jaws', 'Filmstaden Malmo');
 
 
-
+/**
 --
 -- b)
 --
@@ -156,6 +156,7 @@ values('fru',    '2015-2-5', 'James Bond');
 -- 
 -- 8
 -- 
+
 
 -- insert two movie theaters with the same name
 insert into Theaters(name,nbrOfSeats)
@@ -195,3 +196,4 @@ values('fru',  'Victor',   'Lund',   '123');
 -- Since there's a time gap between checking available
 -- spots and actually making the reservation, it's 
 -- possible that the performances could be over filled.
+*/

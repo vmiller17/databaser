@@ -276,7 +276,7 @@ public class BookingPane extends BasicPane {
 			}
 			String movieName = nameList.getSelectedValue();
 			String date = dateList.getSelectedValue();
-			/* --- insert own code here --- */
+			db.makeReservation(date, movieName,CurrentUser.instance().getCurrentUserId());
 		}
 	}
 }
