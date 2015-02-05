@@ -105,23 +105,50 @@ public class Database {
 	* @return true if a reservation is made. False if not.
 	*/
 	public boolean makeReservation(String date, String movie, String username) {
-		String sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) " 
-				+ "values(?,?,?)";
-		
+
+    int r = 0;
+
 		try {
+		  String sql = "select bookings,nbrOfSeats from Performances,Theaters "
+        + "where date = ? and movieTitle = ? "
+        + "and Performances.theaterName = Theaters.name;
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			ps.setString(2, date);
-			ps.setString(3, movie);
-			int r = ps.executeUpdate();
-			return r == 1;
-			
-			
+			ps.setString(1, date);
+			ps.setString(2, movie);
+			ResultSet rs = ps.executeQuery();
+      rs.next();
+      if rs.getInt("bookings") >= rs.getInt("nbrOfSeats") return false
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return false;
+		try {
+		  String sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) " 
+				  + "values(?,?,?)";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, date);
+			ps.setString(3, movie);
+			r = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    if (r==0) return false;
+
+    try {
+		    String sql = "update Reservations "
+              + "set bookings = bookings + 1 "
+              + "where date = ? and movieTitle = ?";
+			  PreparedStatement ps = conn.prepareStatement(sql);
+			  ps.setString(1, date);
+			  ps.setString(2, movie);
+			  r = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+    if (r==0) return false;
+		
+		return r == 1;
 	}
 
 
