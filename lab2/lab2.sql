@@ -83,14 +83,25 @@ insert into Movies(title)
 insert into Theaters(name, nbrOfSeats)
 values
   ('SF',         300),
-  ('Vildanden',  2);
+  ('Vildanden',  2),
+  ('Filmstaden Malmo', 10);
 
 -- Insert data into Performances
 insert into Performances(date, movieTitle, theaterName)
-values('2015-2-3', 'James Bond', 'SF');
+values
+  ('2015-2-3', 'James Bond', 'SF'),
+  ('2015-2-4', 'James Bond', 'SF'),
+  ('2015-2-5', 'James Bond', 'SF'),
+  ('2015-2-6', 'James Bond', 'Vildanden'),
+  ('2015-2-7', 'James Bond', 'SF');
 
 insert into Performances(date, movieTitle, theaterName)
-values('2015-2-3', 'Jaws', 'Vildanden');
+values
+  ('2015-2-4', 'Jaws', 'Vildanden'),
+  ('2015-2-5', 'Jaws', 'SF'),
+  ('2015-2-6', 'Jaws', 'Filmstaden Malmo'),
+  ('2015-2-7', 'Jaws', 'Vildanden'),
+  ('2015-2-8', 'Jaws', 'Filmstaden Malmo'),
 
 insert into Performances(date, movieTitle, theaterName)
 values('2015-2-5', 'James Bond', 'Vildanden');
