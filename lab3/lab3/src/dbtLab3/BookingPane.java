@@ -276,7 +276,12 @@ public class BookingPane extends BasicPane {
 			}
 			String movieName = nameList.getSelectedValue();
 			String date = dateList.getSelectedValue();
-			boolean madeReservation = db.makeReservation(date, movieName,CurrentUser.instance().getCurrentUserId());
+			int reservationNbr = db.makeReservation(date, movieName,CurrentUser.instance().getCurrentUserId());
+			if (reservationNbr > 0) {
+				displayMessage("Reservation number: " + reservationNbr);
+			} else {
+				displayMessage("No more reservations possible");
+			}
 			Performance performance = db.getPerfomance(movieName,date);
 			fields[FREE_SEATS].setText(Integer.toString(performance.getAvailableSeats()));
 		}
