@@ -177,7 +177,6 @@ public class Database {
 				+ "and date = ? "
 				+ "and Performances.theaterName = Theaters.name";
 		
-		
 		Performance performance = null;
 		
 		try {
@@ -185,9 +184,7 @@ public class Database {
 			ps.setString(1, movieName);
 			ps.setString(2, date);
 			ResultSet rs = ps.executeQuery();
-			
-			
-			rs.next();
+
 			String theaterName = rs.getString("theaterName");
 			int availableSeats  = rs.getInt("nbrOfSeats") - rs.getInt("bookings");
 			performance = new Performance(date, movieName, theaterName, availableSeats);
