@@ -75,7 +75,8 @@ insert into Movies(title)
     ('Jaws'         ),
     ('Star Wars I'  ),
     ('Star Wars III'),
-    ('About Time'   );
+    ('About Time'   ),
+    ('Home Alone'   );
 
 
 
@@ -93,31 +94,38 @@ values
   ('2015-2-4', 'James Bond', 'SF'),
   ('2015-2-5', 'James Bond', 'SF'),
   ('2015-2-6', 'James Bond', 'Vildanden'),
-  ('2015-2-7', 'James Bond', 'SF');
-
-insert into Performances(date, movieTitle, theaterName)
-values
+  ('2015-2-7', 'James Bond', 'SF'),
   ('2015-2-4', 'Jaws', 'Vildanden'),
   ('2015-2-5', 'Jaws', 'SF'),
   ('2015-2-6', 'Jaws', 'Filmstaden Malmo'),
   ('2015-2-7', 'Jaws', 'Vildanden'),
-  ('2015-2-8', 'Jaws', 'Filmstaden Malmo');
-
-insert into Performances(date, movieTitle, theaterName)
-values
+  ('2015-2-8', 'Jaws', 'Filmstaden Malmo'),
+  ('2015-2-9', 'Jaws', 'Filmstaden Malmo'),
   ('2015-2-5', 'Home Alone', 'Vildanden'),
   ('2015-2-6', 'Home Alone', 'Vildanden'),
   ('2015-2-7', 'Home Alone', 'SF'),
   ('2015-2-8', 'Home Alone', 'Vildanden'),
-  ('2015-2-9', 'Home Alone', 'Filmstaden Malmo');
-
-insert into Performances(date, movieTitle, theaterName)
-values
-  ('2015-2-5', 'Jaws', 'Vildanden'),
-  ('2015-2-6', 'Jaws', 'Vildanden'),
-  ('2015-2-7', 'Jaws', 'SF'),
-  ('2015-2-8', 'Jaws', 'Vildanden'),
-  ('2015-2-9', 'Jaws', 'Filmstaden Malmo');
+  ('2015-2-9', 'Home Alone', 'Filmstaden Malmo'),
+  ('2015-2-5', 'About Time', 'Vildanden'),
+  ('2015-2-6', 'About Time', 'Vildanden'),
+  ('2015-2-7', 'About Time', 'SF'),
+  ('2015-2-8', 'About Time', 'Vildanden'),
+  ('2015-2-9', 'About Time', 'Filmstaden Malmo'),
+  ('2015-2-5', 'Star Wars I', 'Vildanden'),
+  ('2015-2-6', 'Star Wars I', 'Vildanden'),
+  ('2015-2-7', 'Star Wars I', 'SF'),
+  ('2015-2-8', 'Star Wars I', 'Vildanden'),
+  ('2015-2-9', 'Star Wars I', 'Filmstaden Malmo'),
+  ('2015-2-5', 'Star Wars III', 'Vildanden'),
+  ('2015-2-6', 'Star Wars III', 'Vildanden'),
+  ('2015-2-7', 'Star Wars III', 'SF'),
+  ('2015-2-8', 'Star Wars III', 'Vildanden'),
+  ('2015-2-9', 'Star Wars III', 'Filmstaden Malmo'),
+  ('2015-2-5', '1984', 'Vildanden'),
+  ('2015-2-6', '1984', 'Vildanden'),
+  ('2015-2-7', '1984', 'SF'),
+  ('2015-2-8', '1984', 'Vildanden'),
+  ('2015-2-9', '1984', 'Filmstaden Malmo');
 
 
 /**
