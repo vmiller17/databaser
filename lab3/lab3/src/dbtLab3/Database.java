@@ -110,6 +110,7 @@ public class Database {
 
 		// Make sure it is possible to make a reservation.
 		try {
+			conn.setAutoCommit(false);
 			String sql = "select bookings,nbrOfSeats from Performances,Theaters "
 					+ "where date = ? and movieTitle = ? "
 					+ "and Performances.theaterName = Theaters.name";
@@ -135,7 +136,15 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (result==0) return -1;
+		if (result==0) {
+			try {
+				conn.rollback();
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}	
+			return -1;
+		}
 
 		// Update the Performances table
 		try {
@@ -149,7 +158,15 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (result==0) return -1;
+		if (result==0) {
+			try {
+				conn.rollback();
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return -1;
+		}
 
 		// Return the reservation number for the reservation
 		try {
@@ -170,8 +187,21 @@ public class Database {
 		}
 		
 		if (result > 0) {
-			return result;
+			try {
+				conn.commit();
+				conn.setAutoCommit(true);
+				return result;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return -1;
+			}
 		} else {
+			try {
+				conn.rollback();
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			return -1;
 		}
 	}
