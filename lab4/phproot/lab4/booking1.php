@@ -5,7 +5,6 @@
 	$db = $_SESSION['db'];
 	$userId = $_SESSION['userId'];
 	$db->openConnection();
-	
 	$movieNames = $db->getMovieNames();
 	$db->closeConnection();
 ?>

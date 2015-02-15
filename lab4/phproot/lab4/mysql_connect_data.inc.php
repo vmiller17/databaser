@@ -1,6 +1,6 @@
 <?php
 	$host = "puccini.cs.lth.se";
-	$userName = "xxx";
-	$password = "yyy";
-	$database = "xxx";
+	$userName = "db30";
+	$password = "ibanez17";
+	$database = "db30";
 ?>

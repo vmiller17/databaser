@@ -8,6 +8,8 @@
  * 2) Write more functions.
  *
  */
+require_once('performance.inc.php');
+
 class Database {
 	private $host;
 	private $userName;
@@ -91,7 +93,17 @@ class Database {
 	 * @return The number of affected rows
 	 */
 	private function executeUpdate($query, $param = null) {
-		// ...
+    /*tk not this is just copied from executeQuery, should work? */
+		try {
+			$stmt = $this->conn->prepare($query);
+			$stmt->execute($param);
+			$result = $stmt->fetchAll();
+		} catch (PDOException $e) {
+			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
+			die($error);
+		}
+		return $result;
+    //tk Is this really number of affected rows?
 	}
 	
 	/**
@@ -102,13 +114,120 @@ class Database {
 	 * @return true if the user exists, false otherwise.
 	 */
 	public function userExists($userId) {
-		$sql = "select userId from Users where userId = ?";
+		$sql = "select username from Users where username = ?";
 		$result = $this->executeQuery($sql, array($userId));
 		return count($result) == 1; 
 	}
 
 	/*
 	 * *** Add functions ***
+   *
+   * Existing:
+   * execute query
+   * execute update
+   * user exists
+   *
+   * Mine:
+   * getMovieNames
+   * make reservation
+   * getPerformance
+   * getPerformanceDates
+   */
+
+
+	/**
+	 * Makes a reservation for a movie performance
+	 *
+	 * @param date The date
+	 * @param movie The movie title
+	 * @param username The username
+	 * @return reservationNumber if a reservation is made. -1 if not.
 	 */
+	public function makeReservation($date, $movie, $username) {
+    // tk start rollback-block
+		$sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name";
+		$result = $this->executeQuery($sql, array($date, $movie)); 
+
+    if ($result[0][1] - $result[0][0] <= 0) {
+      //tk rollback
+      return 0;
+    }
+
+		$sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) values(?,?,?)";
+		$result = $this->executeUpdate($sql, array($username, $date, $movie));
+
+    if ($result[0] == 0) {
+      //tk rollback
+      return 0;
+    }
+
+		$sql = "update Performances set bookings = bookings + 1 where date = ? and movieTitle = ?";
+		$result = $this->executeUpdate($sql, array($date, $movie));
+
+    if ($result[0] != 1) {
+      //tk rollback
+      return 0;
+    }
+
+		$sql = "select max(resNbr) from reservations where userUsername = ? and performanceDate = ? and performanceMovieTitle = ?";
+		$result = $this->executeUpdate($sql, array($username, $date, $movie));
+
+    if (! $result[0] > 0) {
+      //tk rollback
+      return 0;
+    }
+
+    //tk send updates
+    
+		return $result[0];
+	}
+
+	/**
+   * Gets the list of movies that are available for viewing.
+	 *
+	 * @return list of movies available
+	 */
+	public function getMovieNames() {
+		$sql = "select title from Movies";
+		$result = $this->executeQuery($sql);
+
+    foreach($result as $row) {
+      $movieNames[] = $row[0];
+    }
+
+		return $movieNames; 
+	}
+
+	/**
+   * Returns all information for a performance.
+   *
+   * @param movieName Title of the performance's movie
+   * @param date Date of the performance
+	 * @return performance object
+	 */
+	public function getPerformance($movieName, $date) {
+		$sql = "select theaterName, bookings, nbrOfSeats from Performances,Theaters where movieTitle = ? and date = ? and Performances.theaterName = Theaters.name";
+		$result = $this->executeQuery($sql, array($movieName, $date) ); 
+
+		return new Performance( $date, $movieName, $result[0][0], $result[0][2]-$result[0][1] );
+	}
+  
+	/**
+   * Returns all performances concerning a certain movie title.
+   *
+   * @param movieName Title of the performance's movie
+	 * @return list containing all information regarding the performance
+	 */
+	public function getPerformanceDates($movieName) {
+		$sql = "select date from Performances where movieTitle = ?";
+		$result = $this->executeQuery($sql, array($movieName));
+
+    foreach($result as $row) {
+      $dates[] = $row[0];
+    }
+
+		return $dates; 
+	}
+
 }
 ?>
