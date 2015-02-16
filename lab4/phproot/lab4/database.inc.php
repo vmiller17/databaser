@@ -133,14 +133,14 @@ class Database {
 	 * @return reservationNumber if a reservation is made. -1 if not.
 	 */
 	public function makeReservation($date, $movie, $username) {
-    // tk start rollback-block
+    $this->conn->beginTransaction();
 	  $sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name";
 	  $result = $this->executeQuery($sql, array($date, $movie)); 
 	  $result= $result[0];
     $result = $result['nbrOfSeats'] - $result['bookings'];
 
     if ($result <= 0) {
-      //tk rollback
+      $this->conn->rollback();
       return -1;
     }
 
@@ -151,7 +151,7 @@ class Database {
 		$result = $this->executeUpdate($sql, array($username, $date, $movie));
 
     if (! $result == 1) {
-      //tk rollback
+      $this->conn->rollback();
       return -1;
     }
 
@@ -160,7 +160,7 @@ class Database {
 		$result = $this->executeUpdate($sql, array($date, $movie));
 
     if (! $result == 1) {
-      //tk rollback
+      $this->conn->rollback();
       return -1;
     }
 
@@ -168,11 +168,11 @@ class Database {
 		$result = $this->executeQuery($sql, array($username, $date, $movie));
 
     if (! $result[0] > 0) {
-      //tk rollback
+      $this->conn->rollback();
       return -1;
     }
 
-    //tk send updates
+    $this->conn->commit();
     
 		return $result[0];
 	}
