@@ -95,15 +95,15 @@ class Database {
 	private function executeUpdate($query, $param = null) {
     /*tk not this is just copied from executeQuery, should work? */
 		try {
+      
 			$stmt = $this->conn->prepare($query);
 			$stmt->execute($param);
-			$result = $stmt->fetchAll();
       $count = $stmt->rowCount();
 		} catch (PDOException $e) {
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
 			die($error);
 		}
-    echo "$count"; //tk
+    //echo "$count"; //tk
 
 		return $count;
 	}
@@ -147,30 +147,39 @@ class Database {
 	 */
 	public function makeReservation($date, $movie, $username) {
     // tk start rollback-block
-		$sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name";
-		$result = $this->executeQuery($sql, array($date, $movie)); 
-    echo "$result[0]['nrbOfSeats'] - $result[0]['bookings']"; //tk
+	  $sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name";
+	  $result = $this->executeQuery($sql, array($date, $movie)); 
+	  $result= $result[0];
+    $result = $result['nbrOfSeats'] - $result['bookings'];
 
-    if ($result[0]['nrbOfSeats'] - $result[0]['bookings'] <= 0) {
+    if ($result <= 0) {
       //tk rollback
+      echo "Fail first loop";
       return -1;
     }
+
+
+
 
 		$sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) values(?,?,?)";
+    //echo "$username $date $movie";
 		$result = $this->executeUpdate($sql, array($username, $date, $movie));
-    echo "$result[0]"; //tk
+    echo "$result"; //tk
 
-    if ($result[0] == 0) {
+    if (! $result == 1) {
       //tk rollback
+      echo "Fail second loop";
       return -1;
     }
+
 
 		$sql = "update Performances set bookings = bookings + 1 where date = ? and movieTitle = ?";
 		$result = $this->executeUpdate($sql, array($date, $movie));
-    echo "$result[0]"; //tk
+    echo "$result"; //tk
 
-    if ($result[0] != 1) {
+    if (! $result == 1) {
       //tk rollback
+      echo "Fail third loop";
       return -1;
     }
 
@@ -179,6 +188,7 @@ class Database {
 
     if (! $result[0] > 0) {
       //tk rollback
+      echo "Fail fourth loop";
       return -1;
     }
 
@@ -213,8 +223,8 @@ class Database {
 	public function getPerformance($movieName, $date) {
 		$sql = "select theaterName, bookings, nbrOfSeats from Performances,Theaters where movieTitle = ? and date = ? and Performances.theaterName = Theaters.name";
 		$result = $this->executeQuery($sql, array($movieName, $date) ); 
-
-		return new Performance( $date, $movieName, $result[0]['theaterName'], $result[0]['nbrOfSeats']-$result[0]['theaterName'] );
+    $result = $result[0];
+		return new Performance( $date, $movieName, $result['theaterName'], $result['nbrOfSeats']-$result['bookings']);
 	}
   
 	/**
