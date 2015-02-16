@@ -93,7 +93,6 @@ class Database {
 	 * @return The number of affected rows
 	 */
 	private function executeUpdate($query, $param = null) {
-    /*tk not this is just copied from executeQuery, should work? */
 		try {
       
 			$stmt = $this->conn->prepare($query);
@@ -103,7 +102,6 @@ class Database {
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
 			die($error);
 		}
-    //echo "$count"; //tk
 
 		return $count;
 	}
@@ -123,17 +121,6 @@ class Database {
 
 	/*
 	 * *** Add functions ***
-   *
-   * Existing:
-   * execute query
-   * execute update
-   * user exists
-   *
-   * Mine:
-   * getMovieNames
-   * make reservation
-   * getPerformance
-   * getPerformanceDates
    */
 
 
@@ -154,7 +141,6 @@ class Database {
 
     if ($result <= 0) {
       //tk rollback
-      echo "Fail first loop";
       return -1;
     }
 
@@ -162,24 +148,19 @@ class Database {
 
 
 		$sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) values(?,?,?)";
-    //echo "$username $date $movie";
 		$result = $this->executeUpdate($sql, array($username, $date, $movie));
-    echo "$result"; //tk
 
     if (! $result == 1) {
       //tk rollback
-      echo "Fail second loop";
       return -1;
     }
 
 
 		$sql = "update Performances set bookings = bookings + 1 where date = ? and movieTitle = ?";
 		$result = $this->executeUpdate($sql, array($date, $movie));
-    echo "$result"; //tk
 
     if (! $result == 1) {
       //tk rollback
-      echo "Fail third loop";
       return -1;
     }
 
@@ -188,7 +169,6 @@ class Database {
 
     if (! $result[0] > 0) {
       //tk rollback
-      echo "Fail fourth loop";
       return -1;
     }
 
