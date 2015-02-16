@@ -192,7 +192,7 @@ class Database {
 		$result = $this->executeQuery($sql);
 
     foreach($result as $row) {
-      $movieNames[] = $row[0];
+      $movieNames[] = $row['title'];
     }
 
 		return $movieNames; 
@@ -209,7 +209,7 @@ class Database {
 		$sql = "select theaterName, bookings, nbrOfSeats from Performances,Theaters where movieTitle = ? and date = ? and Performances.theaterName = Theaters.name";
 		$result = $this->executeQuery($sql, array($movieName, $date) ); 
 
-		return new Performance( $date, $movieName, $result[0][0], $result[0][2]-$result[0][1] );
+		return new Performance( $date, $movieName, $result[0]['theaterName'], $result[0]['nbrOfSeats']-$result[0]['theaterName'] );
 	}
   
 	/**
@@ -223,7 +223,7 @@ class Database {
 		$result = $this->executeQuery($sql, array($movieName));
 
     foreach($result as $row) {
-      $dates[] = $row[0];
+      $dates[] = $row['date'];
     }
 
 		return $dates; 
