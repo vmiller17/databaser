@@ -98,12 +98,14 @@ class Database {
 			$stmt = $this->conn->prepare($query);
 			$stmt->execute($param);
 			$result = $stmt->fetchAll();
+      $count = $stmt->rowCount();
 		} catch (PDOException $e) {
 			$error = "*** Internal error: " . $e->getMessage() . "<p>" . $query;
 			die($error);
 		}
-		return $result;
-    //tk Is this really number of affected rows?
+    echo "$count"; //tk
+
+		return $count;
 	}
 	
 	/**
@@ -147,34 +149,37 @@ class Database {
     // tk start rollback-block
 		$sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name";
 		$result = $this->executeQuery($sql, array($date, $movie)); 
+    echo "$result[0]['nrbOfSeats'] - $result[0]['bookings']"; //tk
 
-    if ($result[0][1] - $result[0][0] <= 0) {
+    if ($result[0]['nrbOfSeats'] - $result[0]['bookings'] <= 0) {
       //tk rollback
-      return 0;
+      return -1;
     }
 
 		$sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) values(?,?,?)";
 		$result = $this->executeUpdate($sql, array($username, $date, $movie));
+    echo "$result[0]"; //tk
 
     if ($result[0] == 0) {
       //tk rollback
-      return 0;
+      return -1;
     }
 
 		$sql = "update Performances set bookings = bookings + 1 where date = ? and movieTitle = ?";
 		$result = $this->executeUpdate($sql, array($date, $movie));
+    echo "$result[0]"; //tk
 
     if ($result[0] != 1) {
       //tk rollback
-      return 0;
+      return -1;
     }
 
-		$sql = "select max(resNbr) from reservations where userUsername = ? and performanceDate = ? and performanceMovieTitle = ?";
-		$result = $this->executeUpdate($sql, array($username, $date, $movie));
+		$sql = "select max(resNbr) from Reservations where userUsername = ? and performanceDate = ? and performanceMovieTitle = ?";
+		$result = $this->executeQuery($sql, array($username, $date, $movie));
 
     if (! $result[0] > 0) {
       //tk rollback
-      return 0;
+      return -1;
     }
 
     //tk send updates
