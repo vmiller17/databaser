@@ -134,7 +134,7 @@ class Database {
 	 */
 	public function makeReservation($date, $movie, $username) {
     $this->conn->beginTransaction();
-	  $sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name";
+	  $sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name for update";
 	  $result = $this->executeQuery($sql, array($date, $movie)); 
 	  $result= $result[0];
     $result = $result['nbrOfSeats'] - $result['bookings'];
@@ -174,7 +174,7 @@ class Database {
 
     $this->conn->commit();
     
-		return $result[0][0];
+		return $result[0];
 	}
 
 	/**
