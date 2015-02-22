@@ -7,7 +7,6 @@
   $movie = $_REQUEST['movieTitle'];
   $date = $_REQUEST['performanceDate'];
 	$db->openConnection();
-  //$reservationNbr = 5;
   $reservationNbr = $db->makeReservation($date, $movie, $userId);
 	$db->closeConnection();
 ?>
@@ -15,8 +14,13 @@
 <html>
 <head><title>Booking 4</title><head>
 <body><h1>Booking 4</h1>
-  One ticket booked. 
-  Booking number: <?php print $reservationNbr ?>
+  <?php if ($reservationNbr < 0) {
+    print "The reservation failed, no more seats available for this performance";
+  } else {
+    print "One ticket booked. Booking number:";
+    print "$reservationNbr";
+  }
+  ?>
 	<p>
 	<p>
 	<form method=post action="booking3.php">
