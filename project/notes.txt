@@ -1,0 +1,60 @@
+New production line in the bakery
+
+Raw materials warehouses
+All necessary ingredients are always available in correct quantities
+
+Each cookie baked in large quantities
+Quick-frozen and packed
+15 cookies in a bag
+10 bags in a box
+36 boxes on a pallet (same kind) (pallet is labeled with bar code)
+
+Pallet is stored in a freezer, bar code is scanned
+
+Customers are registered in their database
+They have special routines for checking and registering customers)
+Orders on the form "send x y and z u on Monday next week"
+
+Each truck loads 60 pallets, bar code scanner
+Must be loaded in production date order (T=1min)
+Truck driver gets bill with names addresses and number of each kind to be
+delivered to each customer. 
+
+They make random samples
+If it's not okay, all pallet with that product produced within a time interval
+is blocked.
+Blocked pallets can't be delivered. 
+
+Produced = read at entrance of deep freezer storage
+PalletNbr (unique), product name, date and time is kept in a database.
+Check how many pallets of a product that have been produced withing certain
+time.
+
+Raw material storage must be updated when a pallet is produced
+Must be able to see amount left of each ingredient
+Mus be able to see when, and how much of, an ingredient last delivered into
+storage
+
+Interface to the collection of recipes
+View and update and enter new
+Recipes don't change during production
+
+Pallets may be blocked, happens before they arrive to freezer
+Pallets can be traced, all info (contents, location, delivered?, to whom?
+etc)
+Which pallets contain certain product?
+Which pallets produced in certain time interval?
+Which pallets are blocked?
+Which blocked ones contain certain product?
+Which pallets have been delivered to certain customer? When?
+
+Orders are registered
+See all orders to be delivered during certain time period
+Manual planning of a weeks production, not on demand
+
+Loading orders before loaded from freezer to truck
+(Customer, number of pallets to be delivered)
+Driver's bill is identical to loading order
+When printing bill, data with delivered pallets must be updated (customer,
+date of delivery)
+
