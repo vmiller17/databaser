@@ -3,7 +3,7 @@ New production line in the bakery
 Raw materials warehouses
 All necessary ingredients are always available in correct quantities
 
-Each cookie baked in large quantities
+Each cookie baked in large quantitiesxxxx
 Quick-frozen and packed
 15 cookies in a bag
 10 bags in a box
@@ -27,7 +27,7 @@ Blocked pallets can't be delivered.
 
 Produced = read at entrance of deep freezer storage
 PalletNbr (unique), product name, date and time is kept in a database.
-Check how many pallets of a product that have been produced withing certain
+Check how many pallets of a product that have been produced within a certain
 time.
 
 Raw material storage must be updated when a pallet is produced
