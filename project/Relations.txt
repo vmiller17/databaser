@@ -1,0 +1,16 @@
+Relations for Bakery 
+
+
+Version 1
+
+
+Customers(_name_,adress);
+Orders(_deliveryDate_,~customerName~);
+CookieTypesInOrder(~cookieName,deliveryDate,costumerName~,quantity);
+LoadingInstructions(~deliveryDate~,~customerName~,~barcode~);
+Pallets(_barcode_,location,blocked,producedDate,producedTime,~cookieType~);
+CookieTypes(_name_);
+Ingredients(_name_);
+Recipes(~cookieName~,~ingredientName~,quantity);
+StoredIn(~warehouseName~,~ingredientName~,quantity, latestDeliveryDate,latestDeliverySize);
+Warehouses(_name_);
