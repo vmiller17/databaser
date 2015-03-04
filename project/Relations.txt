@@ -14,3 +14,31 @@ Ingredients(_name_);
 Recipes(~cookieName~,~ingredientName~,quantity);
 StoredIn(~warehouseName~,~ingredientName~,quantity, latestDeliveryDate,latestDeliverySize);
 Warehouses(_name_);
+
+Version 2
+
+
+Customers(_name_,adress); 
+(primary key: name)
+
+Orders(_orderNbr_,deliveryDate,~customerName~); 
+(primary key: orderNbr)
+
+CookieTypesInOrder(~cookieName,orderNbr~,quantity); 
+(primary key: cookieName, orderNbr)
+
+LoadingInstructions(~orderNbr~,~barcode~); 
+(primary key: barcode)
+
+Pallets(_barcode_,location,blocked,producedDate,producedTime,~cookieType~); 
+(primary key: barcode)
+
+CookieTypes(_name_); 
+(primary key: name)
+
+Recipes(~cookieName~,~ingredientName~,quantity); 
+(primary key: cookieName, ingredientName)
+
+Ingredients(_name_, quantity, latestDeliveryDate,latestDeliverySize); 
+(primary key: name)
+
