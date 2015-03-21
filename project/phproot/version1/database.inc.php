@@ -110,6 +110,39 @@ class Database {
     return new Pallet( $barcode, $result['location'] , $result['blocked'] , $result['producedDate'] , $result['producedTime'], $result['cookieName']);
   }
 
+  /**
+   * Produces a pallet
+   *
+   * @param date The production date
+   * @param movie The production time
+   * @param name The cookie type name
+   * @return barcode if a pallet is produced. -1 if not.
+   */
+  public function producePallet($date, $time, $name) {
+    $this->conn->beginTransaction();
+
+    $sql = "insert into Pallets(location,blocked,producedDate,producedTime,cookieName) values('freezer',0,?,?,?)";
+    $result = $this->executeUpdate($sql, array($date, $time, $name));
+
+    if (! $result == 1) {
+      $this->conn->rollback();
+      return -1;
+    }
+
+    // // Update ingredients...
+    // $sql = "update Ingredients set quantity = quantity - ? where name = ?";
+    // $result = $this->executeUpdate($sql, array($date, $movie));
+
+    // if (! $result == 1) {
+    //   $this->conn->rollback();
+    //   return -1;
+    // }
+
+
+    $this->conn->commit();
+
+    return $result[0][0];
+  }
 
 
 // 	/**

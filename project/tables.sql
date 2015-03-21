@@ -39,7 +39,7 @@ create table Orders (
 );
 
 create table Pallets (
-  barcode       integer,
+  barcode       integer auto_increment,
   location      varchar(32),
   blocked       boolean,
   producedDate  date,
