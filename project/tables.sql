@@ -1,207 +1,108 @@
---
--- a) Create the tables
--- 
-
--- Delete the tables...
+-- Delete the old tables
 set foreign_key_checks = 0;
-drop table if exists Users;
-drop table if exists Movies;
-drop table if exists Theaters;
-drop table if exists Performances;
-drop table if exists Reservations;
+drop table if exists Pallets;
+drop table if exists CookieTypes;
+drop table if exists Recipes;
+drop table if exists Ingredients;
+drop table if exists CookieTypesInOrders;
+drop table if exists LoadingInstructions;
+drop table if exists Orders;
+drop table if exists Customers;
 set foreign_key_checks = 1;
 
--- Create the tables
-create table Users (
-  username        varchar(20),
-  fullName        varchar(40),
-  address         varchar(256),
-  telephoneNbr    varchar(20),
-  primary key (username)
-);
-
-create table Movies (
-  title           varchar(128),
-  primary key (title)
-);
-
-create table Theaters (
-  name     varchar(128),
-  nbrOfSeats      integer,
+-- Create the new tables
+create table CookieTypes (
+  name           varchar(64),
   primary key (name)
 );
 
-create table Performances (
-  date            date,
-  bookings        integer default 0,
-  movieTitle      varchar(128),
-  theaterName     varchar(128),    
-  primary key (date, movieTitle),
-  foreign key (movieTitle) references Movies(title),
-  foreign key (theaterName) references Theaters(name)
-  -- on delete set null
-  -- on update cascade
+create table Ingredients (
+  name                varchar(64),
+  quantity            integer,
+  latestDeliveryDate  date,
+  latestDeliverySize  integer,
+  primary key (name)
 );
 
-create table Reservations (
-  resNbr                  integer auto_increment,
-  userUsername            varchar(20),
-  performanceDate         date,
-  performanceMovieTitle   varchar(128),
-  primary key (resNbr),
-  foreign key (userUsername) references Users(username),
-  foreign key (performanceDate) references Performances(date),
-  foreign key (performanceMovieTitle) references Performances(movieTitle)
+create table Customers (
+  name    varchar(128),
+  address varchar(256),
+  primary key (name)
 );
 
--- Insert data into Users
-insert into Users(username, fullName, address, telephoneNbr)
-values('zicvic',  'Victor',   'Lund',   '123');
+create table Orders (
+  orderNbr      integer auto_increment,
+  deliveryDate  date,
+  customerName  varchar(128),
+  primary key (orderNbr),
+  foreign key (customerName) references Customers(name)
+);
 
-insert into Users(username, fullName, address, telephoneNbr)
-values('jojo',    'Johannes', 'Lund',   '123');
+create table Pallets (
+  barcode       integer,
+  location      varchar(32),
+  blocked       boolean,
+  producedDate  date,
+  producedTime  time,
+  cookieName    varchar(64),
+  primary key (barcode),
+  foreign key (cookieName) references CookieTypes(name)
+);
 
-insert into Users(username, fullName, address, telephoneNbr)
-values('fru',     'Carro',    'Lund',   '123'),
-      ('granne',  'Mateusz',  'Lund',   '456'); 
+create table Recipes (
+  cookieName      varchar(64),
+  ingredientName  varchar(64),
+  quantity        integer,
+  primary key (cookieName, ingredientName),
+  foreign key (cookieName) references CookieTypes(name),
+  foreign key (ingredientName) references Ingredients(name)
+);
 
+create table CookieTypesInOrders (
+  cookieName  varchar(64),
+  orderNbr    integer,
+  quantity    integer,
+  primary key (cookieName, orderNbr),
+  foreign key (cookieName) references CookieTypes(name),
+  foreign key (orderNbr) references Orders(orderNbr)
+);
 
+create table LoadingInstructions (
+  orderNbr  integer,
+  barcode   integer,
+  primary key (barcode),
+  foreign key (orderNbr) references Orders(orderNbr),
+  foreign key (barcode) references Pallets(barcode)
+);
 
--- Insert data into Movies
-insert into Movies(title)
-  values
-    ('James Bond'   ),
-    ('1984'         ),
-    ('Jaws'         ),
-    ('Star Wars I'  ),
-    ('Star Wars III'),
-    ('About Time'   ),
-    ('Home Alone'   );
+-- Add data
+insert into CookieTypes(name)
+values('Nut ring'),
+      ('Nut cookie'),
+      ('Amneris'),
+      ('Tango'),
+      ('Almond delight'),
+      ('Berliner');
 
+insert into Ingredients(name,quantity,latestDeliveryDate,latestDeliverySize)
+values('Flour','1000','2015-01-01','5000');
 
+insert into Customers(name,address)
+values('Victor Miller','Delphi'),
+      ('Johannes Jansson','Vildanden');
 
--- Insert data into Theaters
-insert into Theaters(name, nbrOfSeats)
-values
-  ('SF',         300),
-  ('Vildanden',  2),
-  ('Filmstaden Malmo', 10);
+insert into Orders(deliveryDate,customerName)
+values('2015-05-01','Victor Miller'),
+      ('2015-05-23','Johannes Jansson');
 
--- Insert data into Performances
-insert into Performances(date, movieTitle, theaterName)
-values
-  ('2015-2-3', 'James Bond', 'SF'),
-  ('2015-2-4', 'James Bond', 'SF'),
-  ('2015-2-5', 'James Bond', 'SF'),
-  ('2015-2-6', 'James Bond', 'Vildanden'),
-  ('2015-2-7', 'James Bond', 'SF'),
-  ('2015-2-4', 'Jaws', 'Vildanden'),
-  ('2015-2-5', 'Jaws', 'SF'),
-  ('2015-2-6', 'Jaws', 'Filmstaden Malmo'),
-  ('2015-2-7', 'Jaws', 'Vildanden'),
-  ('2015-2-8', 'Jaws', 'Filmstaden Malmo'),
-  ('2015-2-9', 'Jaws', 'Filmstaden Malmo'),
-  ('2015-2-5', 'Home Alone', 'Vildanden'),
-  ('2015-2-6', 'Home Alone', 'Vildanden'),
-  ('2015-2-7', 'Home Alone', 'SF'),
-  ('2015-2-8', 'Home Alone', 'Vildanden'),
-  ('2015-2-9', 'Home Alone', 'Filmstaden Malmo'),
-  ('2015-2-5', 'About Time', 'Vildanden'),
-  ('2015-2-6', 'About Time', 'Vildanden'),
-  ('2015-2-7', 'About Time', 'SF'),
-  ('2015-2-8', 'About Time', 'Vildanden'),
-  ('2015-2-9', 'About Time', 'Filmstaden Malmo'),
-  ('2015-2-5', 'Star Wars I', 'Vildanden'),
-  ('2015-2-6', 'Star Wars I', 'Vildanden'),
-  ('2015-2-7', 'Star Wars I', 'SF'),
-  ('2015-2-8', 'Star Wars I', 'Vildanden'),
-  ('2015-2-9', 'Star Wars I', 'Filmstaden Malmo'),
-  ('2015-2-5', 'Star Wars III', 'Vildanden'),
-  ('2015-2-6', 'Star Wars III', 'Vildanden'),
-  ('2015-2-7', 'Star Wars III', 'SF'),
-  ('2015-2-8', 'Star Wars III', 'Vildanden'),
-  ('2015-2-9', 'Star Wars III', 'Filmstaden Malmo'),
-  ('2015-2-5', '1984', 'Vildanden'),
-  ('2015-2-6', '1984', 'Vildanden'),
-  ('2015-2-7', '1984', 'SF'),
-  ('2015-2-8', '1984', 'Vildanden'),
-  ('2015-2-9', '1984', 'Filmstaden Malmo');
+insert into Pallets(barcode,location,blocked,producedDate,producedTime,cookieName)
+values('1337','freezer','0','2015-03-01','12:00:00','Tango');
 
+insert into Recipes(cookieName,ingredientName,quantity)
+values('Berliner','Flour','100');
 
-/**
---
--- b)
---
+insert into CookieTypesInOrders(cookieName,orderNbr,quantity)
+values('Berliner','1','10');
 
--- List all movies
-select * from Movies;
-
--- List dates when a movie is shown
-select date
-from Performances
-where movieTitle = 'James Bond';
-
--- List all data concerning a movie performance
-select date, bookings, movieTitle, theaterName, nbrOfSeats
-from Performances, Theaters
-where theaterName = name 
-and date = '2015-02-03' 
-and movieTitle = 'James Bond';
-
-
---
--- c)
--- 
-
--- Insert reservations
-insert into Reservations(userUsername, performanceDate, performanceMovieTitle)
-values('zicvic', '2015-2-3', 'James Bond');
-insert into Reservations(userUsername, performanceDate, performanceMovieTitle)
-values('zicvic', '2015-2-3', 'James Bond');
-insert into Reservations(userUsername, performanceDate, performanceMovieTitle)
-values('fru',    '2015-2-5', 'James Bond');
-
--- 
--- 8
--- 
-
-
--- insert two movie theaters with the same name
-insert into Theaters(name,nbrOfSeats)
-values ('SF', 200);
-insert into Movies(title)
-values('James Bond');
-
--- insert two performances of the 
--- same movie on the same date
-insert into Performances(date, movieTitle, theaterName)
-values('2015-2-3', 'James Bond', 'Vildanden');
-
-
--- insert a performance where the theater 
--- doesn’t exist in the database
-insert into Performances(date, movieTitle, theaterName)
-values('2015-3-3', 'Jaws', 'Delphi');
-
--- insert a ticket reservation where either 
--- the user or the performance doesn’t exist
-insert into Reservations(userUsername, performanceDate, performanceMovieTitle)
-values('Jultomten', '2015-2-3', 'James Bond');
-
-insert into Reservations(userUsername, performanceDate, performanceMovieTitle)
-values('zicvic', '2015-2-3', '1984');
-
--- username not unique
-insert into Users(username, fullName, address, telephoneNbr)
-values('fru',  'Victor',   'Lund',   '123');
-
--- (only the address is optional, others must be assigned) tk
-
---
--- 9
---
-
--- Since there's a time gap between checking available
--- spots and actually making the reservation, it's 
--- possible that the performances could be over filled.
-*/
+insert into LoadingInstructions(orderNbr,barcode)
+values('1','1337');

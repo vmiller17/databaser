@@ -18,7 +18,7 @@ Warehouses(_name_);
 Version 2
 
 
-Customers(_name_,adress); 
+Customers(_name_,address); 
 (primary key: name)
 
 Orders(_orderNbr_,deliveryDate,~customerName~); 
@@ -30,7 +30,7 @@ CookieTypesInOrder(~cookieName,orderNbr~,quantity);
 LoadingInstructions(~orderNbr~,~barcode~); 
 (primary key: barcode)
 
-Pallets(_barcode_,location,blocked,producedDate,producedTime,~cookieType~); 
+Pallets(_barcode_,location,blocked,producedDate,producedTime,~cookieName~); 
 (primary key: barcode)
 
 CookieTypes(_name_); 
