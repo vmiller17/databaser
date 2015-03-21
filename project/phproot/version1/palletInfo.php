@@ -4,9 +4,12 @@
 	
 	session_start();
 	$db = $_SESSION['db'];
-  $barcode = $_REQUEST['barcode'];
+  $product = $_REQUEST['product'];
+  $date = $_REQUEST['date'];
+  $startTime = $_REQUEST['startTime'];
+  $endTime = $_REQUEST['endTime'];
 	$db->openConnection();
-	$pallet = $db->getPallet($barcode);
+	$blocked = $db->blockPallets($product, $date, $startTime, $endTime);
 	$db->closeConnection();
 ?>
 
