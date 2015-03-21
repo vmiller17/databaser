@@ -7,7 +7,7 @@ class Pallet {
   private $producedTime;
   private $cookieName;
 
-  public function __construct($date, $movie, $theaterName, $availableSeats) {
+  public function __construct($barcode, $location, $blocked, $producedDate, $producedTime, $cookieName) {
     $this->barcode = $badcode;
     $this->location = $location;
     $this->blocked = $blocked;
