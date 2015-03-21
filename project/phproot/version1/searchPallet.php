@@ -1,4 +1,20 @@
-<?php
+<html>
+<head><title>Login</title></head>
+<body>
+
+<h1 align="center">Search Pallet</h1>
+
+<form method="post" action="login.php">
+    Barcode:
+    <input type="text" size="20" name="barcode" >
+    <input type="submit" value="Search">
+</form>
+
+</body>
+</html>
+
+
+<!--<?php
 	require_once('database.inc.php');
 	require_once('performance.inc.php');
 	
@@ -39,3 +55,5 @@
 	</form>
 </body>
 </html>
+
+-->
