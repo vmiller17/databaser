@@ -129,6 +129,7 @@ class Database {
       return -1;
     }
 
+
     // // Update ingredients...
     // $sql = "update Ingredients set quantity = quantity - ? where name = ?";
     // $result = $this->executeUpdate($sql, array($date, $movie));
@@ -142,6 +143,39 @@ class Database {
     $this->conn->commit();
 
     return $result[0][0];
+  }
+
+  public function blockPallets($product, $date, $startTime, $endTime) {
+    $this->conn->beginTransaction();
+
+    $sql1 = "select barcode from pallets where cookieName = ? 
+    and producedDate = ? 
+    and producedTime > ? and producedTime < ?";
+    $result1 = $this->executeQuery($sql1, array($product, $date, $startTime, $endTime));
+
+    
+    
+    foreach ($result1 as $row) {
+      $barcodes[] = $row['barcode'];
+    }
+    // Is this needed or how is the results returned? 
+
+
+    $sql2 = "update pallets
+          set blocked = 1
+          where barcode in ?";
+    $result2 = $this->executeUpdate($sql, $barcodes);
+
+
+
+    if (! $result2 == 1) {
+      $this->conn->rollback();
+      return -1;
+    } else {
+      return $barcodes;
+    }
+
+    
   }
 
 

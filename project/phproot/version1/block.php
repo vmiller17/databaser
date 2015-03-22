@@ -17,23 +17,10 @@
 <head><title>Blocked Pallets</title><head>
 <body><h1>Number of blocked pallets</h1>
 <?php
-	$nbrOfPalles = count($blocked);
+	print count($blocked);
 	print 'Number of pallets blocked: '
-	print '$nbrOfPalles'
-
-
-	if ($nbrOfPalles > 0) {
-		?>
-		<table>
-		Barcodes of blocked pallets:
-		<?php
-		foreach ($blocked as $pallet) {
-			?>
-			<tr>
-				<td><?php print $pallet->getBarcode() ?></td>
-			<?php
-		}
-	}
+	//print $nbrOfPalles
 	?>
-	</tr>
-</tabel>
+
+</body>
+</html>
