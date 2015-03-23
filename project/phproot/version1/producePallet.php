@@ -8,13 +8,21 @@
   $name = $_REQUEST['name'];
 
   $db->openConnection();
-    $pallet = $db->producePallet($date, $time, $name);
+    $barcode = $db->producePallet($date, $time, $name);
   $db->closeConnection();
-  header("Location: simulate.php");
 ?>
 
 <html>
-<head><title>Nothing</title><head>
-<body><h1>...</h1>
+<head><title>Pallet Creation Results</title><head>
+<body><h1>Pallet Creation Results</h1>
+<p>
+<?php if ($barcode == -1) {
+  print 'Pallet creation failed!';
+} else {
+  print 'Created pallet with barcode ';
+  print $barcode; 
+  print '!';
+}?>
+</p>
 </body>
 </html>

@@ -121,6 +121,21 @@ class Database {
   public function producePallet($date, $time, $name) {
     $this->conn->beginTransaction();
 
+    // Get list of ingredients
+    $sql = "select ingredientName, quantity from Recipes where cookieName = ?";
+    $result = $this->executeQuery($sql, array($name));
+
+    // Update ingredient list
+    foreach ($result as $line) {
+      $sql = "update Ingredients set quantity = quantity - ? where name = ?";
+      $result2 = $this->executeUpdate($sql, array($line['quantity'],$line['ingredientName']));
+      if (! $result2 == 1) {
+        $this->conn->rollback();
+        return -1;
+      }
+    }
+
+    // Create the pallet
     $sql = "insert into Pallets(location,blocked,producedDate,producedTime,cookieName) values('freezer',0,?,?,?)";
     $result = $this->executeUpdate($sql, array($date, $time, $name));
 
@@ -129,19 +144,12 @@ class Database {
       return -1;
     }
 
+    // Retrieve barcode
+    $sql = "select max(barcode) from Pallets";
+    $result = $this->executeQuery($sql);
 
-    // // Update ingredients...
-    // $sql = "update Ingredients set quantity = quantity - ? where name = ?";
-    // $result = $this->executeUpdate($sql, array($date, $movie));
-
-    // if (! $result == 1) {
-    //   $this->conn->rollback();
-    //   return -1;
-    // }
-
-
+    // Commit changes
     $this->conn->commit();
-
     return $result[0][0];
   }
 
