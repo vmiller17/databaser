@@ -4,8 +4,8 @@
 	<p>
 	What to do:
 	<p>
-	<form method=post action="searchPallet.php">		
-		<input type=submit value="Search Pallet">
+	<form method=post action="search.php">		
+		<input type=submit value="Search">
 	</form>
 	<form method=post action="blockPallet.php">		
 		<input type=submit value="Block Pallet">
@@ -15,17 +15,3 @@
 	</form>
 </body>
 </html>
-
-
-<!--
- 			$first = true;
- 			foreach ($movieNames as $name) {
- 				if ($first) {
- 					print "<option selected>";
- 					$first = false;
- 				} else {
- 					print "<option>";
- 				}
- 				print $name;
- 			}
--->
