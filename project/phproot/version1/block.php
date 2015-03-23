@@ -33,22 +33,3 @@ foreach ($blocked as $barcode ) {
 
 </body>
 </html>
-
-<!--
-<table>
-      <tr>
-        <td>Movie:</td>
-        <td><?php print $performance->getMovie() ?></td>
-      </tr><tr>
-        <td>Date:</td>
-        <td><?php print $performance->getDate() ?></td>
-      </tr><tr>
-        <td>Theater:</td>
-        <td><?php print $performance->getTheaterName() ?></td>
-      </tr><tr>
-        <td>Free seats:</td>
-        <td><?php print $performance->getAvailableSeats() ?></td>
-      </tr>
-    </table>
-    <p>
--->
