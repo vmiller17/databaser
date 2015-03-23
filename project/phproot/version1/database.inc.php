@@ -167,6 +167,7 @@ class Database {
       $this->conn->rollback();
       return -1;
     } else {
+      $this->conn->commit();
       return $barcodes;
     }
 
