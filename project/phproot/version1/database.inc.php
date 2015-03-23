@@ -145,6 +145,7 @@ class Database {
     return $result[0][0];
   }
 
+
   public function blockPallets($product, $date, $startTime, $endTime) {
     $this->conn->beginTransaction();
 
@@ -153,20 +154,14 @@ class Database {
     and producedTime > ? and producedTime < ?";
     $result1 = $this->executeQuery($sql1, array($product, $date, $startTime, $endTime));
 
-    
-    
     foreach ($result1 as $row) {
       $barcodes[] = $row['barcode'];
     }
-    // Is this needed or how is the results returned? 
+    // Is this needed or how is the results returned?
 
-
-    $sql2 = "update pallets
-          set blocked = 1
-          where barcode in ?";
-    $result2 = $this->executeUpdate($sql, $barcodes);
-
-
+    echo $barcodes[0];
+    $sql2 = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime > ? and producedTime < ?";
+    $result2 = $this->executeUpdate($sql2, array($product, $date, $startTime, $endTime));
 
     if (! $result2 == 1) {
       $this->conn->rollback();
@@ -175,7 +170,6 @@ class Database {
       return $barcodes;
     }
 
-    
   }
 
 
