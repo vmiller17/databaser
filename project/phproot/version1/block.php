@@ -17,10 +17,38 @@
 <head><title>Blocked Pallets</title><head>
 <body><h1>Number of blocked pallets</h1>
 <?php
-	print count($blocked);
-	print 'Number of pallets blocked: '
-	//print $nbrOfPalles
+print count($blocked);
+print ' pallets blocked: ';
+?>
+<table>
+<?php
+foreach ($blocked as $barcode ) {
 	?>
+	<tr><td> Barcode: </td>
+		<td><?php print $barcode ?></td></tr>
+	<?php
+}
+?>
+</table>
 
 </body>
 </html>
+
+<!--
+<table>
+      <tr>
+        <td>Movie:</td>
+        <td><?php print $performance->getMovie() ?></td>
+      </tr><tr>
+        <td>Date:</td>
+        <td><?php print $performance->getDate() ?></td>
+      </tr><tr>
+        <td>Theater:</td>
+        <td><?php print $performance->getTheaterName() ?></td>
+      </tr><tr>
+        <td>Free seats:</td>
+        <td><?php print $performance->getAvailableSeats() ?></td>
+      </tr>
+    </table>
+    <p>
+-->

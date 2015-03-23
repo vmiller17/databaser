@@ -159,7 +159,6 @@ class Database {
     }
     // Is this needed or how is the results returned?
 
-    echo $barcodes[0];
     $sql2 = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime > ? and producedTime < ?";
     $result2 = $this->executeUpdate($sql2, array($product, $date, $startTime, $endTime));
 
