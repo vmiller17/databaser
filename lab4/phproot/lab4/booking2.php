@@ -5,7 +5,7 @@
 	session_start();
 	$db = $_SESSION['db'];
 	$userId = $_SESSION['userId'];
-  $movie = $_REQUEST['movieName'];
+    $movie = $_REQUEST['movieName'];
 	$db->openConnection();
 	$dates = $db->getPerformanceDates($movie);
 	$db->closeConnection();

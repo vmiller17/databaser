@@ -1,26 +1,61 @@
+<?php
+    require_once('database.inc.php');    
+    session_start();
+    $db = $_SESSION['db'];
+    $db->openConnection();
+    $cookieNames = $db->getProducts();
+    $barcodes = $db->getAllBarcodes();
+    $dates = $db->getAllProdDates();
+    $db->closeConnection();
+?>
+
 <html>
 <head><title>Search</title></head>
 <body>
 
 <h1 align="center">Search</h1>
 
-<form method="post" action="palletInfo.php">
+<form action="palletInfo.php">
     Search based on barcode:
-    <input type="text" size="20" name="barcode" >
-    <input type="submit" value="Search">
+        <select name="barcode">
+            <?php
+            foreach ($barcodes as $barcode) {
+                ?>
+                <option selected><?php print $barcode ?></option>
+                <?php
+            }
+            ?>
+        </select>      
+        <input type=submit value="Select barcode">
 </form>
 
-<form method="post" action="searchProduct.php">
+<form action="searchProduct.php">
     Search based on product:
-    <input type="text" size="20" name="product" >
-    <input type="submit" value="Search">
+        <select name="product">
+            <?php
+            foreach ($cookieNames as $name) {
+                ?>
+                <option selected><?php print $name ?></option>
+                <?php
+            }
+            ?>
+        </select>      
+        <input type=submit value="Select Cookie Name">
 </form>
 
 <form method="post" action="searchTime.php">
     Search based on time intervall (date,start,end):
-    <input type="text" size="20" name="date" >
-    <input type="text" size="20" name="startTime" >
-    <input type="text" size="20" name="endTime" >
+    <select name="date">
+            <?php
+            foreach ($dates as $date) {
+                ?>
+                <option selected><?php print $date ?></option>
+                <?php
+            }
+            ?>
+        </select>      
+    <input type="text" size="10" name="startTime" >
+    <input type="text" size="10" name="endTime" >
     <input type="submit" value="Search">
 </form>
 
@@ -31,3 +66,4 @@
 
 </body>
 </html>
+

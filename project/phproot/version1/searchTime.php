@@ -20,6 +20,8 @@
 <?php
 print count($pallets);
 print ' pallets found ';
+
+if (count($pallets)>0) {
 ?>
 <table>
 	<tr>
@@ -45,6 +47,10 @@ foreach ($pallets as $pallet ) {
 }
 ?>
 </table>
+
+<?php 
+}
+?>
 
 </body>
 </html>

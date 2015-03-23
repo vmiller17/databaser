@@ -227,6 +227,49 @@ class Database {
   }
 	
 
+
+  public function getProducts() {
+
+    $sql = "select name from CookieTypes";
+    $result = $this->executeQuery($sql);
+
+    foreach ($result as $row) {
+      $cookieName = $row['name'];
+      $cookieNames[] = $cookieName;
+    }
+
+    return $cookieNames;
+
+  }
+
+  public function getAllBarcodes() {
+
+    $sql = "select barcode from pallets";
+    $result = $this->executeQuery($sql);
+
+    foreach ($result as $row) {
+      $barcodes[] = $row['barcode'];
+    }
+
+    return $barcodes;
+
+  }
+
+  public function getAllProdDates() {
+
+    $sql = "select distinct producedDate from pallets";
+    $result = $this->executeQuery($sql);
+
+    foreach ($result as $row) {
+      $dates[] = $row['producedDate'];
+    }
+
+    return $dates;
+
+  }
+
+  
+
 // 	/**
 // 	 * Check if a user with the specified user id exists in the database.
 // 	 * Queries the Users database table.
