@@ -12,7 +12,7 @@
 
 <html>
 <head><title>Info</title><head>
-<body><h1>Pallet Info</h1>
+<body><h1>Pallet Info for pallet <?php print $barcode ?></h1>
   Data for selected pallet: 
   <p>
 	<form method=post action="booking4.php">

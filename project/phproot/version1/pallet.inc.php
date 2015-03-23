@@ -8,7 +8,7 @@ class Pallet {
   private $cookieName;
 
   public function __construct($barcode, $location, $blocked, $producedDate, $producedTime, $cookieName) {
-    $this->barcode = $badcode;
+    $this->barcode = $barcode;
     $this->location = $location;
     $this->blocked = $blocked;
     $this->producedDate = $producedDate;

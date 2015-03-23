@@ -181,6 +181,37 @@ class Database {
   }
 
 
+  public function getPalletsProduct($product) {
+
+    $sql = "select barcode from pallets where cookieName = ?";
+    $result = $this->executeQuery($sql, array($product));
+
+    foreach ($result as $row) {
+      $barcode = $row['barcode'];
+      $pallets[] = $this->getPallet($barcode);
+    }
+
+    return $pallets;
+
+  }
+
+
+  public function getPalletsInterval($date, $startTime, $endTime) {
+
+    $sql = "select barcode from pallets where producedDate = ? 
+    and producedTime > ? and producedTime < ?";
+    $result = $this->executeQuery($sql, array($date, $startTime, $endTime));
+
+    foreach ($result as $row) {
+      $barcode = $row['barcode'];
+      $pallets[] = $this->getPallet($barcode);
+    }
+
+    return $pallets;
+
+  }
+	
+
 // 	/**
 // 	 * Check if a user with the specified user id exists in the database.
 // 	 * Queries the Users database table.
