@@ -24,5 +24,10 @@
     <input type="submit" value="Search">
 </form>
 
+<form method="post" action="searchBlocked.php">
+    Search all blocked.
+    <input type="submit" value="Search">
+</form>
+
 </body>
 </html>

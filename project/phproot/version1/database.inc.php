@@ -210,6 +210,21 @@ class Database {
     return $pallets;
 
   }
+
+
+  public function getBlocked() {
+
+    $sql = "select barcode from pallets where blocked = 1";
+    $result = $this->executeQuery($sql);
+
+    foreach ($result as $row) {
+      $barcode = $row['barcode'];
+      $pallets[] = $this->getPallet($barcode);
+    }
+
+    return $pallets;
+
+  }
 	
 
 // 	/**
