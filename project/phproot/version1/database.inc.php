@@ -114,7 +114,7 @@ class Database {
    * Produces a pallet
    *
    * @param date The production date
-   * @param movie The production time
+   * @param time The production time
    * @param name The cookie type name
    * @return barcode if a pallet is produced. -1 if not.
    */
@@ -154,29 +154,57 @@ class Database {
   }
 
 
+
+  /**
+   * Blocks pallets within a certain time intervall on a specific date,
+   * containing a specific product.
+   *
+   * @param product The product to be blocked
+   * @param date The production date
+   * @param startTime The start time of the intervall
+   * @param endTime The start end of the intervall
+   * @return barcode if a pallet is produced. -1 if not.
+   */
   public function blockPallets($product, $date, $startTime, $endTime) {
-    $this->conn->beginTransaction();
-
-    $sql1 = "select barcode from pallets where cookieName = ? 
+    
+    // See how many pallets that are already blocked
+    $sqlBefore = "select barcode from pallets where cookieName = ? 
     and producedDate = ? 
-    and producedTime > ? and producedTime < ?";
-    $result1 = $this->executeQuery($sql1, array($product, $date, $startTime, $endTime));
+    and blocked = 1
+    and producedTime >= ? and producedTime <= ?";
+    $resultBefore = $this->executeQuery($sqlBefore, array($product, $date, $startTime, $endTime));
 
-    foreach ($result1 as $row) {
-      $barcodes[] = $row['barcode'];
+    foreach ($resultBefore as $row) {
+      $palletsBefore[] = $this->getPallet($row['barcode']);
     }
-    // Is this needed or how is the results returned?
 
-    $sql2 = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime > ? and producedTime < ?";
-    $result2 = $this->executeUpdate($sql2, array($product, $date, $startTime, $endTime));
+    // Updating the database
+    $this->conn->beginTransaction();
+    $sql = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime >= ? and producedTime <= ?";
+    $result = $this->executeUpdate($sql, array($product, $date, $startTime, $endTime));
 
-    if (! $result2 == 1) {
+    // Rollback if someting went wrong
+    if (! $result == 1) {
       $this->conn->rollback();
-      return -1;
     } else {
       $this->conn->commit();
-      return $barcodes;
     }
+
+    // How many pallets are blocked after update
+    $sqlAfter = "select barcode from pallets where cookieName = ? 
+    and producedDate = ? 
+    and blocked = 1
+    and producedTime >= ? and producedTime <= ?";
+    $resultAfter = $this->executeQuery($sqlAfter, array($product, $date, $startTime, $endTime));
+
+    foreach ($resultAfter as $row) {
+      $palletsAfter[] = $this->getPallet($row['barcode']);
+    }
+
+    // Number of changed values
+    $diff = count($palletsAfter)-count($palletsBefore);
+
+    return array($diff, $palletsAfter);
 
   }
 
@@ -199,7 +227,7 @@ class Database {
   public function getPalletsInterval($date, $startTime, $endTime) {
 
     $sql = "select barcode from pallets where producedDate = ? 
-    and producedTime > ? and producedTime < ?";
+    and producedTime >= ? and producedTime <= ?";
     $result = $this->executeQuery($sql, array($date, $startTime, $endTime));
 
     foreach ($result as $row) {
@@ -268,6 +296,19 @@ class Database {
 
   }
 
+  public function getAllLocations() {
+
+    $sql = "select location from Locations";
+    $result = $this->executeQuery($sql);
+
+    foreach ($result as $row) {
+      $locations[] = $row['location'];
+    }
+
+    return $locations;
+
+  }
+
   /**
    * A more general search method
    * 
@@ -279,51 +320,60 @@ class Database {
 
     $and = "";
 
-    if ($barcode != "-") {
-      $SQLbarcode = $and." barcode is ".$barcode;
+    if ($barcode != "--All--") {
+      $SQLbarcode = $and." barcode = "."?";
       $and = " and ";
+      $addon[] = $SQLbarcode;
+      $params[] = $barcode;
     }
 
-    if ($location != "-") {
-      $SQLlocation = $and."location is ".$location;
+    if ($location != "--All--") {
+      $SQLlocation = $and." location = "."?";
       $and = " and ";
+      $addon[] = $SQLlocation;
+      $params[] = $location;
     }
 
-    if ($blocked != "-") {
-      $SQLblocked = $and." blocked is ".$blocked;
+    if ($blocked != "--All--") {
+      $SQLblocked = $and." blocked = "."?";
       $and = " and ";
+      $addon[] = $SQLblocked;
+      if ($blocked == "Yes") {
+        $params[] = 1;
+      } else {
+        $params[] = 0;
+      }
     }
 
-    $SQLtime = $and." producedTime >= ".$startTime." and producedTime <= ".$endTime;
+    $SQLtime = $and." producedTime >= "."?"." and producedTime <= "."?";
     $and = " and ";
+    $addon[] = $SQLtime;
+    $params[] = $startTime;
+    $params[] = $endTime;
 
-    if ($name != "-") {
-      $SQLname = $and." cookieName is ".$name;
+    if ($cookieName != "--All--") {
+      $SQLcookieName = $and." cookieName = "."?";
       $and = " and ";
+      $addon[] = $SQLcookieName;
+      $params[] = $cookieName;
+      //print $cookieName;
+    }
+  
+    // Create final sql query
+    $sql = "select barcode from pallets where";
+    foreach ($addon as $add) {
+      $sql = $sql.$add;
     }
 
-    $sql = "select barcode from Pallets where ? ? ? ? ? ?;";
-    $result = $this->executeQuery($sql, array($SQLbarcode, $SQLlocation, $SQLblocked, $SQLdate, $SQLtime, $SQLname));
+    // Execute Query
+    $result = $this->executeQuery($sql, $params);
 
+    // Get Pallets
     foreach ($result as $row) {
       $pallets[] = $this->getPallet($row['barcode']);
     }
 
     return $pallets;
-
-  }
-
-
-  public function getAllLocations() {
-
-    $sql = "select location from Locations";
-    $result = $this->executeQuery($sql);
-
-    foreach ($result as $row) {
-      $locations[] = $row['location'];
-    }
-
-    return $locations;
 
   }
 
