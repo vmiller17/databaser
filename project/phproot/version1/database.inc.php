@@ -279,31 +279,57 @@ class Database {
 
     $and = "";
 
-    if ($barcode != "-") {
-      $SQLbarcode = $and." barcode is ".$barcode;
+    if ($barcode != "--All--") {
+      $SQLbarcode = $and." barcode = "."?";
       $and = " and ";
+      $addon[] = $SQLbarcode;
+      $params[] = $barcode;
+      //print $barcode;
     }
 
-    if ($location != "-") {
-      $SQLlocation = $and."location is ".$location;
+    if ($location != "--All--") {
+      $SQLlocation = $and."location = "."?";
       $and = " and ";
+      $addon = $SQLlocation;
+      $params[] = $location;
+      //print $location;
     }
 
-    if ($blocked != "-") {
-      $SQLblocked = $and." blocked is ".$blocked;
+    if ($blocked != "--All--") {
+      $SQLblocked = $and." blocked = "."?";
       $and = " and ";
+      $addon = $SQLblocked;
+      $params[] = $blocked;
+      //print $blocked;
     }
 
-    $SQLtime = $and." producedTime >= ".$startTime." and producedTime <= ".$endTime;
+    $SQLtime = $and." producedTime >= "."?"." and producedTime <= "."?";
     $and = " and ";
+    $addon[] = $SQLtime;
+    $params[] = $startTime;
+    $params[] = $endTime;
 
-    if ($name != "-") {
-      $SQLname = $and." cookieName is ".$name;
+    if ($cookieName != "--All--") {
+      $SQLcookieName = $and." cookieName = "."?";
       $and = " and ";
+      $addon[] = $SQLcookieName;
+      $params[] = $cookieName;
+      //print $cookieName;
+    }
+  
+    if (count($addon) < 1) {
+      $sql = "select barcode from pallets";
+    } else {
+      $sql = "select barcode from pallets where";
+      //$sql = "select barcode from pallets where";
+      foreach ($addon as $add) {
+        $sql = $sql.$add;
+      }
     }
 
-    $sql = "select barcode from Pallets where ? ? ? ? ? ?;";
-    $result = $this->executeQuery($sql, array($SQLbarcode, $SQLlocation, $SQLblocked, $SQLdate, $SQLtime, $SQLname));
+    
+    $result = $this->executeQuery($sql, $params);
+    //$result = $this->executeQuery($sql);
 
     foreach ($result as $row) {
       $pallets[] = $this->getPallet($row['barcode']);

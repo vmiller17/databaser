@@ -20,7 +20,7 @@
     
     <p> Barcode:
     <select name="barcode">
-        <option selected>-</option>
+        <option selected>--All--</option>
         <?php foreach ($barcodes as $barcode) { ?>
             <option><?php print $barcode ?></option>
         <?php } ?>
@@ -28,7 +28,7 @@
 
     <p>Product:
     <select name="product">
-        <option selected>-</option>
+        <option selected>--All--</option>
         <?php foreach ($cookieNames as $name) { ?>
             <option><?php print $name ?></option>
         <?php } ?>
@@ -36,7 +36,7 @@
 
     <p>Location:
     <select name="location">
-        <option selected>-</option>
+        <option selected>--All--</option>
         <?php foreach ($locations as $loc) { ?>
             <option><?php print $loc ?></option>
         <?php } ?>
@@ -44,7 +44,7 @@
 
     <p>Blocked: 
     <select name="blocked">
-        <option selected>-</option>
+        <option selected>--All--</option>
         <option>Yes</option>
         <option>No</option>
     </select></p>

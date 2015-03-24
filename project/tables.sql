@@ -84,11 +84,11 @@ create table LoadingInstructions (
 
 -- Add data
 insert into CookieTypes(name)
-values('Nut ring'),
-      ('Nut cookie'),
+values('Nut Ring'),
+      ('Nut Cookie'),
       ('Amneris'),
       ('Tango'),
-      ('Almond delight'),
+      ('Almond Delight'),
       ('Berliner');
 
 insert into Locations(location)
@@ -109,8 +109,26 @@ values('2015-05-01','Victor Miller'),
       ('2015-05-23','Johannes Jansson');
 
 insert into Pallets(barcode,location,blocked,producedDate,producedTime,cookieName)
-values('1337','Freezer','0','2015-03-01','12:00:00','Tango');
+values('1337','Freezer','0','2015-03-01','12:00:00','Tango'),
+      ('1338','Freezer','0','2015-03-01','12:10:00','Tango'),
+      ('1339','Freezer','0','2015-03-01','12:15:00','Tango'),
+      ('1340','Freezer','0','2015-03-01','12:20:00','Berliner'),
+      ('1341','Freezer','0','2015-03-01','12:25:00','Berliner'),
+      ('1342','Freezer','0','2015-03-01','12:30:00','Berliner'),
+      ('1343','Freezer','0','2015-03-01','12:35:00','Berliner'),
+      ('1344','Freezer','0','2015-03-01','12:40:00','Berliner'),
+      ('1345','Freezer','0','2015-03-01','12:45:00','Berliner'),
+      ('1346','Freezer','0','2015-03-01','12:50:00','Berliner'),
+      ('1347','Freezer','0','2015-03-01','12:55:00','Berliner'),
+      ('1348','Freezer','0','2015-03-01','13:00:00','Nut Cookie'),
+      ('1349','Freezer','0','2015-03-01','13:10:00','Nut Cookie'),
+      ('1350','Freezer','0','2015-03-01','13:15:00','Almond Delight'),
+      ('1351','Freezer','0','2015-03-01','13:20:00','Tango'),
+      ('1352','Freezer','0','2015-03-01','13:25:00','Tango'),
+      ('1353','Freezer','0','2015-03-01','13:30:00','Tango'),
+      ('1354','Freezer','0','2015-03-01','13:35:00','Tango');
 
+      
 insert into Recipes(cookieName,ingredientName,quantity)
 values('Berliner','Flour','100');
 
