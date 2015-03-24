@@ -268,6 +268,52 @@ class Database {
 
   }
 
+
+  /**
+   * A more general search method
+   * 
+   *
+   * @param 
+   * @return barcodes
+   */
+  public function generalSearch($barcode,$location,$blocked,$date,$startTime,$endTime,$cookieName) {
+
+    $and = "";
+
+    if ($barcode != "-") {
+      $SQLbarcode = $and." barcode is ".$barcode;
+      $and = " and ";
+    }
+
+    if ($location != "-") {
+      $SQLlocation = $and."location is ".$location;
+      $and = " and ";
+    }
+
+    if ($blocked != "-") {
+      $SQLblocked = $and." blocked is ".$blocked;
+      $and = " and ";
+    }
+
+    $SQLtime = $and." producedTime >= ".$startTime." and producedTime <= ".$endTime;
+    $and = " and ";
+
+    if ($name != "-") {
+      $SQLname = $and." cookieName is ".$name;
+      $and = " and ";
+    }
+
+    $sql = "select barcode from Pallets where ? ? ? ? ? ?;";
+    $result = $this->executeQuery($sql, array($SQLbarcode, $SQLlocation, $SQLblocked, $SQLdate, $SQLtime, $SQLname));
+
+    foreach ($result as $row) {
+      $barcodes[] = $row['barcode'];
+    }
+
+    return $barcodes;
+
+  }
+
   
 
 // 	/**
