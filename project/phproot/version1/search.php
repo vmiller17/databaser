@@ -54,8 +54,8 @@
             }
             ?>
         </select>      
-    <input type="text" size="10" name="startTime" >
-    <input type="text" size="10" name="endTime" >
+    <input type="time" size="10" name="startTime" >
+    <input type="time" size="10" name="endTime" >
     <input type="submit" value="Search">
 </form>
 
