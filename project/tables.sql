@@ -40,7 +40,7 @@ create table Orders (
 );
 
 create table Locations (
-  location     varchar(32)
+  location     varchar(32),
   primary key (location)
 );
 
