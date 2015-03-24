@@ -136,7 +136,7 @@ class Database {
     }
 
     // Create the pallet
-    $sql = "insert into Pallets(location,blocked,producedDate,producedTime,cookieName) values('freezer',0,?,?,?)";
+    $sql = "insert into Pallets(location,blocked,producedDate,producedTime,cookieName) values('Freezer',0,?,?,?)";
     $result = $this->executeUpdate($sql, array($date, $time, $name));
 
     if (! $result == 1) {
@@ -265,6 +265,19 @@ class Database {
     }
 
     return $dates;
+
+  }
+
+  public function getAllLocations() {
+
+    $sql = "select location from Locations";
+    $result = $this->executeQuery($sql);
+
+    foreach ($result as $row) {
+      $locations[] = $row['location'];
+    }
+
+    return $locations;
 
   }
 

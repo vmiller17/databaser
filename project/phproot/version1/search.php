@@ -6,6 +6,7 @@
     $cookieNames = $db->getProducts();
     $barcodes = $db->getAllBarcodes();
     $dates = $db->getAllProdDates();
+    $locations = $db->getAllLocations();
     $db->closeConnection();
 ?>
 
@@ -16,53 +17,48 @@
 <h1 align="center">Search</h1>
 
 <form action="palletInfo.php">
-    Search based on barcode:
-        <select name="barcode">
-            <option selected>--All--</option>
-            <?php
-            foreach ($barcodes as $barcode) {
-                ?>
-                <option><?php print $barcode ?></option>
-                <?php
-            }
-            ?>
-        </select>      
-        <!--<input type=submit value="Select barcode">-->
-</form>
+    
+    <p> Barcode:
+    <select name="barcode">
+        <option selected>-</option>
+        <?php foreach ($barcodes as $barcode) { ?>
+            <option><?php print $barcode ?></option>
+        <?php } ?>
+    </select></p>    
 
-<form action="searchProduct.php">
-    Search based on product:
-        <select name="product">
-            <option selected>--All--</option>
-            <?php
-            foreach ($cookieNames as $name) {
-                ?>
-                <option><?php print $name ?></option>
-                <?php
-            }
-            ?>
-        </select>      
-        <!--<input type=submit value="Select Cookie Name">-->
-</form>
+    <p>Product:
+    <select name="product">
+        <option selected>-</option>
+        <?php foreach ($cookieNames as $name) { ?>
+            <option><?php print $name ?></option>
+        <?php } ?>
+    </select></p>
 
-<form method="post" action="searchTime.php">
-    Search based on time intervall (date,start,end):
+    <p>Location:
+    <select name="location">
+        <option selected>-</option>
+        <?php foreach ($locations as $loc) { ?>
+            <option><?php print $loc ?></option>
+        <?php } ?>
+    </select></p>       
+
+    <p>Blocked: 
+    <select name="blocked">
+        <option selected>-</option>
+        <option>Yes</option>
+        <option>No</option>
+    </select></p>
+
+    <p>Date:
     <select name="date">
-            <?php
-            foreach ($dates as $date) {
-                ?>
-                <option selected><?php print $date ?></option>
-                <?php
-            }
-            ?>
-        </select>      
-    <input type="time" size="10" name="startTime" >
-    <input type="time" size="10" name="endTime" >
-    <input type="submit" value="Search">
-</form>
+        <option selected>-</option>
+        <?php foreach ($dates as $date) { ?>
+            <option><?php print $date ?></option>
+        <?php } ?>
+    </select></p>
 
-<form method="post" action="searchBlocked.php">
-    Search all blocked.
+    <input type="time" size="10" value="00:00:00" name="startTime" >
+    <input type="time" size="10" value="23:59:59" name="endTime" >
     <input type="submit" value="Search">
 </form>
 
