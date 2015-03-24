@@ -306,10 +306,10 @@ class Database {
     $result = $this->executeQuery($sql, array($SQLbarcode, $SQLlocation, $SQLblocked, $SQLdate, $SQLtime, $SQLname));
 
     foreach ($result as $row) {
-      $barcodes[] = $row['barcode'];
+      $pallets[] = $this->getPallet($row['barcode']);
     }
 
-    return $barcodes;
+    return $pallets;
 
 
   public function getAllLocations() {
