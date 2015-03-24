@@ -4,10 +4,10 @@
 
 	session_start();
 	$db = $_SESSION['db'];
-  	$product = $_REQUEST['product'];
-  	$date = $_REQUEST['date'];
-  	$startTime = $_REQUEST['startTime'];
-  	$endTime = $_REQUEST['endTime'];
+  $product = $_REQUEST['product'];
+  $date = $_REQUEST['date'];
+  $startTime = $_REQUEST['startTime'];
+  $endTime = $_REQUEST['endTime'];
 	$db->openConnection();
 	$ret = $db->blockPallets($product, $date, $startTime, $endTime);
 	$db->closeConnection();
@@ -15,10 +15,11 @@
 
 <html>
 <head><title>Blocked Pallets</title><head>
-<body><h1>Number of blocked pallets</h1>
+<body><h1>Blocked pallets with <?php print $product ?></h1>
+
 <?php
-	print $ret[0];
-	print ' new pallets blocked. All blocked pallets in intervall: ';
+print $ret[0];
+print ' new pallets blocked. All blocked pallets with '.$product.' in the intervall: ';
 
 if (count($ret[1])>0) {
 ?>

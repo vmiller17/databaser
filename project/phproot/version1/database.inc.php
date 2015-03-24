@@ -168,8 +168,8 @@ class Database {
     }
     // zicvic: Problem when a pallet is allready blocked.
 
-    //$sql = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime > ? and producedTime < ?";
-    //$result = $this->executeUpdate($sql, array($product, $date, $startTime, $endTime));
+    $sql = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime >= ? and producedTime <= ?";
+    $result = $this->executeUpdate($sql, array($product, $date, $startTime, $endTime));
 
     $sqlAfter = "select barcode from pallets where cookieName = ? 
     and producedDate = ? 
