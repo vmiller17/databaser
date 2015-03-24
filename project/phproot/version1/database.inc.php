@@ -156,27 +156,42 @@ class Database {
 
   public function blockPallets($product, $date, $startTime, $endTime) {
     $this->conn->beginTransaction();
-
-    $sql1 = "select barcode from pallets where cookieName = ? 
+    // zicvic: Do to all that we need here or do we need a "for update"?
+    $sqlBefore = "select barcode from pallets where cookieName = ? 
     and producedDate = ? 
-    and producedTime > ? and producedTime < ?";
-    $result1 = $this->executeQuery($sql1, array($product, $date, $startTime, $endTime));
+    and blocked = 1
+    and producedTime >= ? and producedTime <= ?";
+    $resultBefore = $this->executeQuery($sqlBefore, array($product, $date, $startTime, $endTime));
 
-    foreach ($result1 as $row) {
-      $barcodes[] = $row['barcode'];
+    foreach ($resultBefore as $row) {
+      $palletsBefore[] = $this->getPallet($row['barcode']);
     }
-    // Is this needed or how is the results returned?
+    // zicvic: Problem when a pallet is allready blocked.
 
-    $sql2 = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime > ? and producedTime < ?";
-    $result2 = $this->executeUpdate($sql2, array($product, $date, $startTime, $endTime));
+    //$sql = "update pallets set blocked = 1 where cookieName = ? and producedDate = ? and producedTime > ? and producedTime < ?";
+    //$result = $this->executeUpdate($sql, array($product, $date, $startTime, $endTime));
 
-    if (! $result2 == 1) {
+    $sqlAfter = "select barcode from pallets where cookieName = ? 
+    and producedDate = ? 
+    and blocked = 1
+    and producedTime >= ? and producedTime <= ?";
+    $resultAfter = $this->executeQuery($sqlAfter, array($product, $date, $startTime, $endTime));
+
+    foreach ($resultAfter as $row) {
+      $palletsAfter[] = $this->getPallet($row['barcode']);
+    }
+
+    $diff = count($palletsAfter)-count($palletsBefore);
+
+    if (! $result == 1) {
       $this->conn->rollback();
-      return -1;
+      //return -1;
     } else {
       $this->conn->commit();
-      return $barcodes;
+      //return $barcodes;
     }
+
+    return array($diff, $palletsAfter);
 
   }
 
