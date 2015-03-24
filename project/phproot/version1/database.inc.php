@@ -311,6 +311,8 @@ class Database {
 
     return $pallets;
 
+  }
+
 
   public function getAllLocations() {
 
