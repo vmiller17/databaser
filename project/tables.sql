@@ -127,8 +127,6 @@ values('1337','Freezer','0','2015-03-01','12:00:00','Tango'),
       ('1352','Freezer','0','2015-03-01','13:25:00','Tango'),
       ('1353','Freezer','0','2015-03-01','13:30:00','Tango'),
       ('1354','Freezer','0','2015-03-01','13:35:00','Tango');
-
-      
 insert into Recipes(cookieName,ingredientName,quantity)
 values('Berliner','Flour','100');
 

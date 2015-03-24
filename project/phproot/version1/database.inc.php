@@ -288,18 +288,22 @@ class Database {
     }
 
     if ($location != "--All--") {
-      $SQLlocation = $and."location = "."?";
+      $SQLlocation = $and." location = "."?";
       $and = " and ";
-      $addon = $SQLlocation;
+      $addon[] = $SQLlocation;
       $params[] = $location;
-      //print $location;
+      print $location;
     }
 
     if ($blocked != "--All--") {
       $SQLblocked = $and." blocked = "."?";
       $and = " and ";
-      $addon = $SQLblocked;
-      $params[] = $blocked;
+      $addon[] = $SQLblocked;
+      if ($blocked == "Yes") {
+        $params[] = 1;
+      } else {
+        $params[] = 0;
+      }
       //print $blocked;
     }
 
