@@ -311,6 +311,8 @@ class Database {
 
     return $barcodes;
 
+  }
+
 
   public function getAllLocations() {
 

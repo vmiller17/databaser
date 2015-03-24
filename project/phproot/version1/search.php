@@ -16,7 +16,7 @@
 
 <h1 align="center">Search</h1>
 
-<form action="palletInfo.php">
+<form action="searchGeneral.php">
     
     <p> Barcode:
     <select name="barcode">
