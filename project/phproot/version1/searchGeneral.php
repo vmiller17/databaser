@@ -19,7 +19,7 @@
 
 <html>
 <head><title>Pallets</title><head>
-<body><h1>Pallets with <?php print $product ?></h1>
+<body><h1>Search results</h1>
 <?php
 print count($pallets);
 print ' pallets found ';
