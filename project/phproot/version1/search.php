@@ -18,29 +18,31 @@
 <form action="palletInfo.php">
     Search based on barcode:
         <select name="barcode">
+            <option selected>--All--</option>
             <?php
             foreach ($barcodes as $barcode) {
                 ?>
-                <option selected><?php print $barcode ?></option>
+                <option><?php print $barcode ?></option>
                 <?php
             }
             ?>
         </select>      
-        <input type=submit value="Select barcode">
+        <!--<input type=submit value="Select barcode">-->
 </form>
 
 <form action="searchProduct.php">
     Search based on product:
         <select name="product">
+            <option selected>--All--</option>
             <?php
             foreach ($cookieNames as $name) {
                 ?>
-                <option selected><?php print $name ?></option>
+                <option><?php print $name ?></option>
                 <?php
             }
             ?>
         </select>      
-        <input type=submit value="Select Cookie Name">
+        <!--<input type=submit value="Select Cookie Name">-->
 </form>
 
 <form method="post" action="searchTime.php">
