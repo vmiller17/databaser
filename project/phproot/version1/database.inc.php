@@ -136,7 +136,7 @@ class Database {
     }
 
     // Create the pallet
-    $sql = "insert into Pallets(location,blocked,producedDate,producedTime,cookieName) values('freezer',0,?,?,?)";
+    $sql = "insert into Pallets(location,blocked,producedDate,producedTime,cookieName) values('Freezer',0,?,?,?)";
     $result = $this->executeUpdate($sql, array($date, $time, $name));
 
     if (! $result == 1) {
@@ -268,7 +268,6 @@ class Database {
 
   }
 
-
   /**
    * A more general search method
    * 
@@ -312,123 +311,19 @@ class Database {
 
     return $barcodes;
 
+
+  public function getAllLocations() {
+
+    $sql = "select location from Locations";
+    $result = $this->executeQuery($sql);
+
+    foreach ($result as $row) {
+      $locations[] = $row['location'];
+    }
+
+    return $locations;
+
   }
-
-  
-
-// 	/**
-// 	 * Check if a user with the specified user id exists in the database.
-// 	 * Queries the Users database table.
-// 	 *
-// 	 * @param userId The user id 
-// 	 * @return true if the user exists, false otherwise.
-// 	 */
-// 	public function userExists($userId) {
-// 		$sql = "select username from Users where username = ?";
-// 		$result = $this->executeQuery($sql, array($userId));
-// 		return count($result) == 1; 
-// 	}
-
-
-//	/**
-//	 * Makes a reservation for a movie performance
-//	 *
-//	 * @param date The date
-//	 * @param movie The movie title
-//	 * @param username The username
-//	 * @return reservationNumber if a reservation is made. -1 if not.
-//	 */
-//	public function makeReservation($date, $movie, $username) {
-//    $this->conn->beginTransaction();
-//	  $sql = "select bookings,nbrOfSeats from Performances,Theaters where date = ? and movieTitle = ? and Performances.theaterName = Theaters.name";
-//	  $result = $this->executeQuery($sql, array($date, $movie)); 
-//	  $result= $result[0];
-//    $result = $result['nbrOfSeats'] - $result['bookings'];
-//
-//    if ($result <= 0) {
-//      $this->conn->rollback();
-//      return -1;
-//    }
-//
-//
-//
-//
-//		$sql = "insert into Reservations(userUsername, performanceDate, performanceMovieTitle) values(?,?,?)";
-//		$result = $this->executeUpdate($sql, array($username, $date, $movie));
-//
-//    if (! $result == 1) {
-//      $this->conn->rollback();
-//      return -1;
-//    }
-//
-//
-//		$sql = "update Performances set bookings = bookings + 1 where date = ? and movieTitle = ?";
-//		$result = $this->executeUpdate($sql, array($date, $movie));
-//
-//    if (! $result == 1) {
-//      $this->conn->rollback();
-//      return -1;
-//    }
-//
-//		$sql = "select max(resNbr) from Reservations where userUsername = ? and performanceDate = ? and performanceMovieTitle = ?";
-//		$result = $this->executeQuery($sql, array($username, $date, $movie));
-//
-//    if (! $result[0] > 0) {
-//      $this->conn->rollback();
-//      return -1;
-//    }
-//
-//    $this->conn->commit();
-//    
-//		return $result[0][0];
-//	}
-
-//	/**
-//   * Gets the list of movies that are available for viewing.
-//	 *
-//	 * @return list of movies available
-//	 */
-//	public function getMovieNames() {
-//		$sql = "select title from Movies";
-//		$result = $this->executeQuery($sql);
-//
-//    foreach($result as $row) {
-//      $movieNames[] = $row['title'];
-//    }
-//
-//		return $movieNames; 
-//	}
-
-//	/**
-//   * Returns all information for a performance.
-//   *
-//   * @param movieName Title of the performance's movie
-//   * @param date Date of the performance
-//	 * @return performance object
-//	 */
-//	public function getPerformance($movieName, $date) {
-//		$sql = "select theaterName, bookings, nbrOfSeats from Performances,Theaters where movieTitle = ? and date = ? and Performances.theaterName = Theaters.name";
-//		$result = $this->executeQuery($sql, array($movieName, $date) ); 
-//    $result = $result[0];
-//		return new Performance( $date, $movieName, $result['theaterName'], $result['nbrOfSeats']-$result['bookings']);
-//	}
-  
-//	/**
-//   * Returns all performances concerning a certain movie title.
-//   *
-//   * @param movieName Title of the performance's movie
-//	 * @return list containing all information regarding the performance
-//	 */
-//	public function getPerformanceDates($movieName) {
-//		$sql = "select date from Performances where movieTitle = ?";
-//		$result = $this->executeQuery($sql, array($movieName));
-//
-//    foreach($result as $row) {
-//      $dates[] = $row['date'];
-//    }
-//
-//		return $dates; 
-//	}
 
 }
 ?>

@@ -1,6 +1,7 @@
 -- Delete the old tables
 set foreign_key_checks = 0;
 drop table if exists Pallets;
+drop table if exists Locations;
 drop table if exists CookieTypes;
 drop table if exists Recipes;
 drop table if exists Ingredients;
@@ -38,6 +39,11 @@ create table Orders (
   foreign key (customerName) references Customers(name)
 );
 
+create table Locations (
+  location     varchar(32)
+  primary key (location)
+);
+
 create table Pallets (
   barcode       integer auto_increment,
   location      varchar(32),
@@ -46,7 +52,8 @@ create table Pallets (
   producedTime  time,
   cookieName    varchar(64),
   primary key (barcode),
-  foreign key (cookieName) references CookieTypes(name)
+  foreign key (cookieName) references CookieTypes(name),
+  foreign key (location) references Locations(location)
 );
 
 create table Recipes (
@@ -84,6 +91,12 @@ values('Nut ring'),
       ('Almond delight'),
       ('Berliner');
 
+insert into Locations(location)
+values('Freezer'),
+      ('Delivered'),
+      ('On truck'),
+      ('Loading');
+
 insert into Ingredients(name,quantity,latestDeliveryDate,latestDeliverySize)
 values('Flour','1000','2015-01-01','5000');
 
@@ -96,7 +109,7 @@ values('2015-05-01','Victor Miller'),
       ('2015-05-23','Johannes Jansson');
 
 insert into Pallets(barcode,location,blocked,producedDate,producedTime,cookieName)
-values('1337','freezer','0','2015-03-01','12:00:00','Tango');
+values('1337','Freezer','0','2015-03-01','12:00:00','Tango');
 
 insert into Recipes(cookieName,ingredientName,quantity)
 values('Berliner','Flour','100');
