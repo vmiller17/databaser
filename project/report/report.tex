@@ -29,31 +29,52 @@
 % 8. A user’s manual (not necessary if everything in the program is self-explanatory).
 
 
-
-
-
-
-
-%\pagestyle{fancy}
+\pagestyle{fancy}
 \thispagestyle{empty}
-%\rhead{Victor Miller, 900805-0057}
-%\lhead{}
+\rhead{Johannes Jansson and Victor Miller}
+\lhead{}
 
 \begin{document}
 
-\title{Krusty Cockies}
-\author{Johannes Jansson, Victor Miller}
-%\date{}
+\title{Programming Project: Krusty Cookies}
+\author{Johannes Jansson, F11\\tfy11jja@student.lu.se\\\\Victor Miller, F11\\tfy11vmi@student.lu.se}
 
-
-
+\date{}
 \maketitle
+\newpage
 
 \section*{Introduction}
+\section*{Requirements}
+Even though the requirements were a bit diffuse (as intended) we are fairly confident that we have met all of them. 
+\section*{Outline of the System}
+\section*{E/R Diagram}
 
-This is the report on the project in database technology.
+\begin{figure}[h!]
+  \begin{centering}
+    \includegraphics[width=\textwidth]{../ER.png}
+    \label{er-diagram}
+    \caption{E/R--diagram for the system}
+  \end{centering}
+\end{figure}
 
-\sec
+\section*{Relations}
+The following relations were the basis for creating the database:
+
+\lstinputlisting[firstline=21]{../Relations.txt}
+\section*{SQL Statements}
+The following SQL statements were used to create the database:
+
+\lstinputlisting[lastline=83]{../tables.sql}
+\section*{User's manual}
+We consider the system self--explanatory enough not to require an user manual. 
+The system has, in fact, been tested on a med--student with great success.
+The only things worth pointing out are that:
+
+\begin{enumerate}
+  \item This thing
+  \item This thing
+  \item And this thing
+\end{enumerate}
 
 % % Task 1
 % \setcounter{section}{1}

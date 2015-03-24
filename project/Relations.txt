@@ -15,30 +15,37 @@ Recipes(~cookieName~,~ingredientName~,quantity);
 StoredIn(~warehouseName~,~ingredientName~,quantity, latestDeliveryDate,latestDeliverySize);
 Warehouses(_name_);
 
-Version 2
+Version 3
 
-
-Customers(_name_,address); 
-(primary key: name)
-
-Orders(_orderNbr_,deliveryDate,~customerName~); 
-(primary key: orderNbr)
-
-CookieTypesInOrder(~cookieName,orderNbr~,quantity); 
-(primary key: cookieName, orderNbr)
-
-LoadingInstructions(~orderNbr~,~barcode~); 
-(primary key: barcode)
-
-Pallets(_barcode_,location,blocked,producedDate,producedTime,~cookieName~); 
-(primary key: barcode)
 
 CookieTypes(_name_); 
-(primary key: name)
+(Primary key: name)
 
-Recipes(~cookieName~,~ingredientName~,quantity); 
-(primary key: cookieName, ingredientName)
+Ingredients(_name_, quantity, latestDeliveryDate,
+    latestDeliverySize); 
+(Primary key: name)
 
-Ingredients(_name_, quantity, latestDeliveryDate,latestDeliverySize); 
-(primary key: name)
+Customers(_name_,address); 
+(Primary key: name)
+
+Orders(_orderNbr_,deliveryDate,~customerName~); 
+(Primary key: orderNbr. Foreign key: customerName)
+
+Locations(_location_);
+(Primary key: location)
+
+Pallets(_barcode_,~location~,blocked,producedDate,producedTime,
+    ~cookieName~); 
+(Primary key: barcode. Foreign keys: location, cookieName)
+
+Recipes(_~cookieName~,~ingredientName~_,quantity); 
+(Primary keys: cookieName, ingredientName. 
+    Foreign keys: cookieName, ingredientName)
+
+CookieTypesInOrders(_~cookieName~,~orderNbr~_,quantity); 
+(Primary keys: cookieName, orderNbr. 
+    Foreign keys: cookieName, orderNbr)
+
+LoadingInstructions(~orderNbr~,_~barcode~_); 
+(Primary key: barcode. Foreign keys: orderNbr, barcode)
 
