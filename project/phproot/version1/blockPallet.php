@@ -14,7 +14,7 @@
 <head><title>Login</title></head>
 <body>
 
-<h1 align="center">Block Pallets</h1>
+<h1>Block Pallets</h1>
 
 <form method="post" action="block.php">
     <p>Product:
