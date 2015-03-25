@@ -19,7 +19,6 @@
 <form method="post" action="block.php">
     <p>Product:
     <select name="product">
-        <option selected>--All--</option>
         <?php foreach ($cookieNames as $name) { ?>
             <option><?php print $name ?></option>
         <?php } ?>
@@ -27,7 +26,6 @@
 
     <p>Date:
     <select name="date">
-        <option selected>-</option>
         <?php foreach ($dates as $date) { ?>
             <option><?php print $date ?></option>
         <?php } ?>
@@ -35,10 +33,10 @@
     <p>
 
     Start time:
-    <input type="time" size="10" name="startTime" >
+    <input type="time" size="10" value="00:00:00" name="startTime" >
     <p>
     End time:
-    <input type="time" size="10" name="endTime" >
+    <input type="time" size="10" value="23:59:59" name="endTime" >
     <p>
     <input type="submit" value="Block!">
     <p>
