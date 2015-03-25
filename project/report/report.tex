@@ -12,6 +12,7 @@
 \usepackage{verbatim}
 \usepackage{listings}
 \usepackage{fancyhdr}
+\usepackage{url}
 %\usepackage[]{mcode} % \lstinputlisting[firstline=300,lastline=500]{file.m}
 
 % The report should contain:
@@ -37,7 +38,7 @@
 
 \begin{document}
 
-\title{Programming Project: Krusty Cookies}
+\title{Programming Project: Krusty Kookies}
 \author{Johannes Jansson, F11\\tfy11jja@student.lu.se\\\\Victor Miller, F11\\tfy11vmi@student.lu.se}
 
 \date{}
@@ -45,6 +46,12 @@
 \newpage
 
 \section*{Introduction}
+The fictive company Krusty Kookies has recently expanded into Sweden, and needs a computerized system for production and delivery of cookies. 
+The system needs to handle everything: storage of ingredients, lists of recipes, tracking of pallets, placed orders and deliveries. 
+This project is a part of the LTH course EDA216 -- Database technology, and our task is to implement the parts of this system related to production.
+We will also create a screen that simulated production, so that the system can be tested without the presence of an actual factory.
+
+
 \section*{Requirements}
 Even though the requirements were a bit diffuse (as intended) we are fairly confident that we have met all of them. 
 \section*{Outline of the System}
@@ -55,6 +62,24 @@ The creation and population of the database is performed by sourcing the file \t
 The factory interface is a web page written in PHP. 
 The php tool PDO was used to establish a connection to the database. 
 The PHP class \textbf{database.inc.php} handles everything related to the SQL database, and the PHP class \textbf{pallet.inc.php} is used to transmit data from the database class to the webpage.
+The connection is established just as in the lab.
+Updates and queries are made using perpared statements:
+\begin{verbatim}
+$stmt = $this->conn->prepare($query);
+$stmt->execute($param);
+\end{verbatim}
+to protect the database from SQL injections. 
+The newly created methods for this assignment are:
+\begin{itemize}
+  \item \textbf{producePallet(\$date, \$time, \$name)} simulates the production of a pallet.
+  \item \textbf{getPallet(\$barcode)} returns a php pallet object with information from the corresponding pallet tuple in Pallets.
+  \item \textbf{blockIntervall(\$product, \$date, \$startTime, \$endTime)} finds all pallets meeting the criteria, blocks them and returns them.
+  \item \textbf{generalSearch} handles all searching requested by the user.
+\end{itemize}
+There are also methods for getting all locations, production dates, barcodes and products, used for generating dropdown menus in the user interface. 
+The class \textbf{database.inc.php} is quite well commented, have a look there for more details.
+
+The pallet class only consists of variables, a constructor and getters.
 
 
 
@@ -72,7 +97,7 @@ The interface consists of X views. tk explain them
 \section*{Relations}
 The following relations were the basis for creating the database:
 
-\lstinputlisting[firstline=21]{../Relations.txt}
+\lstinputlisting[label={Relations.txt},caption={Relations.txt},firstline=21]{../Relations.txt}
 \section*{SQL Statements}
 The following SQL statements were used to create the database:
 
@@ -88,7 +113,6 @@ The only things worth pointing out are that:
   \item And this thing
 \end{enumerate}
 
-% % Task 1
 % \setcounter{section}{1}
 % \section*{Task 1}
 % \input{../task1/task1.tex}
