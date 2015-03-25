@@ -14,6 +14,6 @@ Modifications to the tables, adding new tuples etc is performed using mysql. In 
 
 If anything is unclear, please refer to the attached project report. 
 
-Best regards,
-Johannes Jansson, F11, tfy11jja@student.lu.se
-Victor Miller, F11, tfy11vmi@student.lu.se
+Best regards,  
+Johannes Jansson, F11, tfy11jja@student.lu.se  
+Victor Miller, F11, tfy11vmi@student.lu.se  

@@ -119,6 +119,9 @@ class Database {
    * @return barcode if a pallet is produced. -1 if not.
    */
   public function producePallet($date, $time, $name) {
+    if (strtotime($date) == false | strtotime($time) == false) {
+      return -1;
+    }
     $this->conn->beginTransaction();
 
     // Get list of ingredients
@@ -166,6 +169,9 @@ class Database {
    * @return barcode if a pallet is produced. -1 if not.
    */
   public function blockIntervall($product, $date, $startTime, $endTime) {
+    if (strtotime($date) == false | strtotime($startTime) == false | strtotime($endTime) == false) {
+      return -1;
+    }
     
     // See how many pallets that are already blocked
     $sqlBefore = "select barcode from pallets where cookieName = ? 
