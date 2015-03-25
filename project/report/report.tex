@@ -58,7 +58,67 @@ The PHP class \textbf{database.inc.php} handles everything related to the SQL da
 
 
 
-The interface consists of X views. tk explain them
+The interface consists of 8 views. The first view that the user ecounters is the login page. This is a simple view that only has as purporse to login to to the database. The view can be seen below 
+
+\begin{figure}[h]
+  \centering
+  	\begin{subfigure}[b]{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{figures/view_login.png}
+    	\label{figure:view_login}
+    	\caption{Login view for the interface}
+ 		\end{subfigure}	
+
+ 		\begin{subfigure}[b]{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{figures/view_mainpage.png}
+    	\label{figure:view_mainpage}
+    	\caption{View for the main page}
+ 		\end{subfigure} 
+ 		\caption{First views}
+\end{figure}
+
+The user can then navigate on to one of the three options given, \emph{Search, Block Pallet(s)} or \emph{Simulate Production}. Each one of them has one input view where the user can provide the program with suitable input and the submit. The user is the provided with a result view to see what happend according to the given input.
+
+\subsection*{Searching}
+
+In the searching view the user can choose to search on different parameters. Each parameter can be left as \emph{All} or set to a specific value. This gives the user the possibility to define thier search as they want. An example of the search view and the result is given below
+
+\begin{figure}[h]
+  \centering
+  	\begin{subfigure}[b]{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{figures/view_search.png}
+    	\label{figure:view_search}
+    	\caption{Login view for the interface}
+ 		\end{subfigure}	
+
+ 		\begin{subfigure}[b]{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{figures/view_searchResult.png}
+    	\label{figure:view_searchResult}
+    	\caption{View for the main page}
+ 		\end{subfigure} 
+ 		\caption{First views}
+\end{figure}
+
+
+\subsection*{Blocking}
+
+When the user wants to block pallets in a certain time intervall containing a certain product they can go to the block view. The user is the asked to choose which product they want to block and then a production date and time intervall to block all pallets with that product. The result of the request is the displayed in the next view. The user is provided with information on how many pallets that where blocked but also pallets in the intervall that are already blocked are displayed.
+
+\begin{figure}[h]
+  \centering
+  	\begin{subfigure}[b]{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{figures/view_block.png}
+    	\label{figure:view_block}
+    	\caption{Login view for the interface}
+ 		\end{subfigure}	
+
+ 		\begin{subfigure}[b]{0.45\textwidth}
+    	\includegraphics[width=\textwidth]{figures/view_blockResult.png}
+    	\label{figure:view_blockResult}
+    	\caption{View for the main page}
+ 		\end{subfigure} 
+ 		\caption{First views}
+\end{figure}
+
 \section*{E/R Diagram}
 
 \begin{figure}[h!]
