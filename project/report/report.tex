@@ -64,7 +64,7 @@ The factory interface is a web page written in PHP.
 The php tool PDO was used to establish a connection to the database. 
 The PHP class \textbf{database.inc.php} handles everything related to the SQL database, and the PHP class \textbf{pallet.inc.php} is used to transmit data from the database class to the webpage.
 The connection is established just as in the lab.
-Updates and queries are made using perpared statements:
+Updates and queries are made using prepared statements:
 \begin{verbatim}
 $stmt = $this->conn->prepare($query);
 $stmt->execute($param);
@@ -74,7 +74,7 @@ The newly created methods for this assignment are:
 \begin{itemize}
   \item \textbf{producePallet(\$date, \$time, \$name)} simulates the production of a pallet.
   \item \textbf{getPallet(\$barcode)} returns a php pallet object with information from the corresponding pallet tuple in Pallets.
-  \item \textbf{blockIntervall(\$product, \$date, \$startTime, \$endTime)} finds all pallets meeting the criteria, blocks them and returns them.
+  \item \textbf{blockInterval(\$product, \$date, \$startTime, \$endTime)} finds all pallets meeting the criteria, blocks them and returns them.
   \item \textbf{generalSearch()} handles all searching requested by the user.
 \end{itemize}
 There are also methods for getting all locations, production dates, barcodes and products, used for generating dropdown menus in the user interface. 
@@ -84,7 +84,7 @@ The pallet class only consists of variables, a constructor and getters.
 
 \subsection*{Web interface}
 
-The interface consists of 8 views. The first view that the user ecounters is the login page. This is a simple view that only has as purporse to login to to the database. The view can be seen below 
+The interface consists of 8 views. The first view that the user encounters is the login page. This is a simple view that only has as purpose to login to the database. The view can be seen below 
 
 \begin{figure}[h!]
   \centering
@@ -101,7 +101,7 @@ The interface consists of 8 views. The first view that the user ecounters is the
  		\caption{First views}
 \end{figure}
 
-The user can then navigate on to one of the three options given, \emph{Search, Block Pallet(s)} or \emph{Simulate Production}. Each one of them has one input view where the user can provide the program with suitable input and then submit. The user is then provided with a result view to see what happend according to the given input.
+The user can then navigate on to one of the three options given, \emph{Search, Block Pallet(s)} or \emph{Simulate Production}. Each one of them has one input view where the user can provide the program with suitable input and then submit. The user is then provided with a result view to see what happened according to the given input.
 
 \subsection*{Searching}
 
@@ -128,7 +128,7 @@ In the searching view the user can choose to search on different parameters. Eac
 
 \subsection*{Blocking}
 
-When the user wants to block pallets in a certain time intervall containing a certain product they can go to the block view. The user is then asked to choose which product they want to block. After that a production date and time intervall to block all pallets with that product. The result of the request is the displayed in the next view. The user is provided with information on how many pallets that where blocked but also pallets in the intervall that are already blocked are displayed. See figure \ref{figure:view_blocking}
+When the user wants to block pallets in a certain time interval containing a certain product they can go to the block view. The user is then asked to choose which product they want to block. After that a production date and time interval to block all pallets with that product. The result of the request is the displayed in the next view. The user is provided with information on how many pallets that where blocked but also pallets in the interval that are already blocked are displayed. See figure \ref{figure:view_blocking}
 
 \begin{figure}[h!]
   \centering
@@ -148,7 +148,7 @@ When the user wants to block pallets in a certain time intervall containing a ce
 
 \subsection*{Simulate production}
 
-To simulate the production of a new pallet the user can enter a view where one can choose which product one wants to produce and then what date and time it should be done. If the production is successfull the user get the barcode for the produced pallet display, if not a message saying that something went wrong. See figure \ref{figure:viewPR}
+To simulate the production of a new pallet the user can enter a view where one can choose which product one wants to produce and then what date and time it should be done. If the production is successful the user get the barcode for the produced pallet display, if not a message saying that something went wrong. See figure \ref{figure:viewPR}
 
 \begin{figure}[h!]
   \centering
@@ -186,7 +186,7 @@ The following SQL statements were used to create the database:
 
 \lstinputlisting[label={tables.sql},caption={tables.sql},lastline=83]{../tables.sql}
 \section*{User's manual}
-We consider the system self--explanatory enough not to require an user manual. 
+We consider the system self--explanatory enough not to require a user manual. 
 The system has, in fact, been tested on a medical--student with great success. See the \textbf{README.md} file on how to test the program.
 
 
