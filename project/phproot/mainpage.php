@@ -7,7 +7,7 @@
 	<form method=post action="search.php">		
 		<input type=submit value="Search">
 	</form>
-	<form method=post action="blockPallet.php">		
+	<form method=post action="block.php">		
 		<input type=submit value="Block Pallet(s)">
 	</form>
 	<form method=post action="simulate.php">		

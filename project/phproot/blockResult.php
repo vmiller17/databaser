@@ -1,35 +1,27 @@
 <?php
 	require_once('database.inc.php');
-	
+	require_once('pallet.inc.php');
+
 	session_start();
 	$db = $_SESSION['db'];
+  $product = $_REQUEST['product'];
+  $date = $_REQUEST['date'];
+  $startTime = $_REQUEST['startTime'];
+  $endTime = $_REQUEST['endTime'];
 	$db->openConnection();
-	$barcode = $_REQUEST['barcode'];
-	$location = $_REQUEST['location'];
-	$cookieName = $_REQUEST['product'];
-	$blocked = $_REQUEST['blocked'];
-	$date = $_REQUEST['date'];
-	$startTime = $_REQUEST['startTime'];
-	$endTime = $_REQUEST['endTime'];
-	$pallets = $db->generalSearch($barcode, $location, $blocked, $date, $startTime, $endTime, $cookieName);
+	$ret = $db->blockIntervall($product, $date, $startTime, $endTime);
 	$db->closeConnection();
-	
 ?>
 
-
-
 <html>
-<head><title>Pallets</title><head>
-<body><h1>Search results</h1>
-<?php
-print count($pallets);
-if (count($pallets) == 1) {
-	print ' pallet found ';
-} else {
-	print ' pallets found ';
-}
+<head><title>Blocked Pallets</title><head>
+<body><h1>Blocked pallets with <?php print $product ?></h1>
 
-if (count($pallets)>0) {
+<?php
+print $ret[0];
+print ' new pallets blocked. All blocked pallets with '.$product.' in the intervall: ';
+
+if (count($ret[1])>0) {
 ?>
 <table>
 	<tr>
@@ -41,7 +33,7 @@ if (count($pallets)>0) {
 		<td>Cookie Name</td>
 	</tr>
 <?php
-foreach ($pallets as $pallet ) {
+foreach ($ret[1] as $pallet ) {
 	?>
 	<tr>
         <td><?php print $pallet->getBarcode() ?></td>
@@ -60,7 +52,7 @@ foreach ($pallets as $pallet ) {
 }
 ?>
 
-<form action="search.php">
+<form action="block.php">
     <input type="submit" value="Back">
 </form>
 

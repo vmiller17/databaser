@@ -24,5 +24,9 @@
   print '!';
 }?>
 </p>
+
+<form action="simulate.php">
+    <input type="submit" value="Back">
+</form>
 </body>
 </html>

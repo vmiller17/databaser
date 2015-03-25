@@ -1,56 +1,51 @@
 <?php
-	require_once('database.inc.php');
-	require_once('pallet.inc.php');
-
-	session_start();
-	$db = $_SESSION['db'];
-  $product = $_REQUEST['product'];
-  $date = $_REQUEST['date'];
-  $startTime = $_REQUEST['startTime'];
-  $endTime = $_REQUEST['endTime'];
-	$db->openConnection();
-	$ret = $db->blockIntervall($product, $date, $startTime, $endTime);
-	$db->closeConnection();
+    require_once('database.inc.php');    
+    session_start();
+    $db = $_SESSION['db'];
+    $db->openConnection();
+    $cookieNames = $db->getProducts();
+    $barcodes = $db->getAllBarcodes();
+    $dates = $db->getAllProdDates();
+    $locations = $db->getAllLocations();
+    $db->closeConnection();
 ?>
 
 <html>
-<head><title>Blocked Pallets</title><head>
-<body><h1>Blocked pallets with <?php print $product ?></h1>
+<head><title>Login</title></head>
+<body>
 
-<?php
-print $ret[0];
-print ' new pallets blocked. All blocked pallets with '.$product.' in the intervall: ';
+<h1>Block Pallets</h1>
 
-if (count($ret[1])>0) {
-?>
-<table>
-	<tr>
-		<td>Barcode</td>
-		<td>Location</td>
-		<td>Blocked</td>
-		<td>Production date</td>
-		<td>Production time</td>
-		<td>Cookie Name</td>
-	</tr>
-<?php
-foreach ($ret[1] as $pallet ) {
-	?>
-	<tr>
-        <td><?php print $pallet->getBarcode() ?></td>
-        <td><?php print $pallet->getLocation() ?></td>
-        <td><?php print $pallet->getBlocked() ?></td>
-        <td><?php print $pallet->getProducedDate() ?></td>
-        <td><?php print $pallet->getProducedTime() ?></td>
-        <td><?php print $pallet->getCookieName() ?></td>
-      </tr>
-	<?php
-}
-?>
-</table>
+<form method="post" action="blockResult.php">
+    <p>Product:
+    <select name="product">
+        <?php foreach ($cookieNames as $name) { ?>
+            <option><?php print $name ?></option>
+        <?php } ?>
+    </select></p>
 
-<?php 
-}
-?>
+
+    <p>Date:
+    <select name="date">
+        <?php foreach ($dates as $date) { ?>
+            <option><?php print $date ?></option>
+        <?php } ?>
+    </select></p>
+    <p>
+
+    Start time:
+    <input type="time" size="10" value="00:00:00" name="startTime" >
+    <p>
+    End time:
+    <input type="time" size="10" value="23:59:59" name="endTime" >
+    <p>
+    <input type="submit" value="Block!">
+    <p>
+</form>
+
+<form action="mainpage.php">
+    <input type="submit" value="Back to main page">
+</form>
 
 </body>
 </html>

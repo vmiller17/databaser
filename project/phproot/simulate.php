@@ -5,6 +5,7 @@
     $db->openConnection();
     $cookieNames = $db->getProducts();
     $db->closeConnection();
+    date_default_timezone_set('Europe/Stockholm');
 ?>
 
 <html>
@@ -23,9 +24,9 @@
             ?>
         </select> </p> 
       <p>Date to be produced: </p>
-      <p><input type="text" size="20" name="date"></p>
+      <input type="date" name="date" value="<?php echo date('Y-m-d'); ?>" >
       <p>Time to be produced: </p>
-      <p><input type="text" size="20" name="time"></p>    
+      <input type="time" name="time" value="<?php echo date('H:i:s'); ?>" >   
       <p><input type="submit" value="Prouce pallet"></p>
     </form>
 
@@ -35,3 +36,4 @@
   </p>
 </body>
 </html>
+
