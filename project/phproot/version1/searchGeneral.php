@@ -4,13 +4,13 @@
 	session_start();
 	$db = $_SESSION['db'];
 	$db->openConnection();
-	$barcode = $_SESSION['barcode'];
-	$location = $_SESSION['location'];
-	$cookieName = $_SESSION['product'];
-	$blocked = $_SESSION['blocked'];
-	$date = $_SESSION['date'];
-	$startTime = $_SESSION['startTime'];
-	$endTime = $_SESSION['endTime'];
+	$barcode = $_REQUEST['barcode'];
+	$location = $_REQUEST['location'];
+	$cookieName = $_REQUEST['product'];
+	$blocked = $_REQUEST['blocked'];
+	$date = $_REQUEST['date'];
+	$startTime = $_REQUEST['startTime'];
+	$endTime = $_REQUEST['endTime'];
 	$pallets = $db->generalSearch($barcode, $location, $blocked, $date, $startTime, $endTime, $cookieName);
 	$db->closeConnection();
 ?>
@@ -19,10 +19,14 @@
 
 <html>
 <head><title>Pallets</title><head>
-<body><h1>Pallets with <?php print $product ?></h1>
+<body><h1>Search results</h1>
 <?php
 print count($pallets);
-print ' pallets found ';
+if (count($pallets) == 1) {
+	print ' pallet found ';
+} else {
+	print ' pallets found ';
+}
 
 if (count($pallets)>0) {
 ?>
@@ -31,8 +35,8 @@ if (count($pallets)>0) {
 		<td>Barcode</td>
 		<td>Location</td>
 		<td>Blocked</td>
-		<td>Prod date</td>
-		<td>Prod time</td>
+		<td>Production date</td>
+		<td>Production time</td>
 		<td>Cookie Name</td>
 	</tr>
 <?php
