@@ -44,5 +44,9 @@
     <p>
 </form>
 
+<form action="mainpage.php">
+    <input type="submit" value="Back to main page">
+</form>
+
 </body>
 </html>

@@ -1,13 +1,13 @@
 <?php
-    require_once('database.inc.php');    
-    session_start();
-    $db = $_SESSION['db'];
-    $db->openConnection();
-    $cookieNames = $db->getProducts();
-    $barcodes = $db->getAllBarcodes();
-    $dates = $db->getAllProdDates();
-    $locations = $db->getAllLocations();
-    $db->closeConnection();
+  require_once('database.inc.php');    
+  session_start();
+  $db = $_SESSION['db'];
+  $db->openConnection();
+  $cookieNames = $db->getProducts();
+  $barcodes = $db->getAllBarcodes();
+  $dates = $db->getAllProdDates();
+  $locations = $db->getAllLocations();
+  $db->closeConnection();
 ?>
 
 <html>
@@ -16,7 +16,7 @@
 
 <h1 align="center">Search</h1>
 
-<form action="searchGeneral.php">
+<form action="searchResult.php">
     
     <p> Barcode:
     <select name="barcode">
@@ -60,6 +60,10 @@
     <input type="time" size="10" value="00:00:00" name="startTime" >
     <input type="time" size="10" value="23:59:59" name="endTime" >
     <input type="submit" value="Search">
+</form>
+
+<form action="mainpage.php">
+    <input type="submit" value="Back to main page">
 </form>
 
 </body>
