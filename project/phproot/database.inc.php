@@ -1,5 +1,6 @@
 <?php
 require_once('pallet.inc.php');
+date_default_timezone_set('Europe/Stockholm');
 
 class Database {
 	private $host;

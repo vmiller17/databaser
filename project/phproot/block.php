@@ -11,7 +11,7 @@
 ?>
 
 <html>
-<head><title>Login</title></head>
+<head><title>Block Pallets</title></head>
 <body>
 
 <h1>Block Pallets</h1>

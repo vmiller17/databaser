@@ -18,7 +18,11 @@
 <body><h1>Blocked pallets with <?php print $product ?></h1>
 
 <?php
-print $ret[0];
+if ($ret[0] == null) {
+	print 0;
+} else {
+	print $ret[0];
+}
 print ' new pallets blocked. All blocked pallets with '.$product.' in the intervall: ';
 
 if (count($ret[1])>0) {
