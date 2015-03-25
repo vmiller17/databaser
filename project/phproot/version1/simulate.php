@@ -28,6 +28,10 @@
       <p><input type="text" size="20" name="time"></p>    
       <p><input type="submit" value="Prouce pallet"></p>
     </form>
+
+    <form action="mainpage.php">
+      <input type="submit" value="Back to main page">
+    </form>
   </p>
 </body>
 </html>

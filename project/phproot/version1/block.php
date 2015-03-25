@@ -9,7 +9,7 @@
   $startTime = $_REQUEST['startTime'];
   $endTime = $_REQUEST['endTime'];
 	$db->openConnection();
-	$ret = $db->blockPallets($product, $date, $startTime, $endTime);
+	$ret = $db->blockIntervall($product, $date, $startTime, $endTime);
 	$db->closeConnection();
 ?>
 

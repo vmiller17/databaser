@@ -165,7 +165,7 @@ class Database {
    * @param endTime The start end of the intervall
    * @return barcode if a pallet is produced. -1 if not.
    */
-  public function blockPallets($product, $date, $startTime, $endTime) {
+  public function blockIntervall($product, $date, $startTime, $endTime) {
     
     // See how many pallets that are already blocked
     $sqlBefore = "select barcode from pallets where cookieName = ? 
@@ -208,54 +208,11 @@ class Database {
 
   }
 
-
-  public function getPalletsProduct($product) {
-
-    $sql = "select barcode from pallets where cookieName = ?";
-    $result = $this->executeQuery($sql, array($product));
-
-    foreach ($result as $row) {
-      $barcode = $row['barcode'];
-      $pallets[] = $this->getPallet($barcode);
-    }
-
-    return $pallets;
-
-  }
-
-
-  public function getPalletsInterval($date, $startTime, $endTime) {
-
-    $sql = "select barcode from pallets where producedDate = ? 
-    and producedTime >= ? and producedTime <= ?";
-    $result = $this->executeQuery($sql, array($date, $startTime, $endTime));
-
-    foreach ($result as $row) {
-      $barcode = $row['barcode'];
-      $pallets[] = $this->getPallet($barcode);
-    }
-
-    return $pallets;
-
-  }
-
-
-  public function getBlocked() {
-
-    $sql = "select barcode from pallets where blocked = 1";
-    $result = $this->executeQuery($sql);
-
-    foreach ($result as $row) {
-      $barcode = $row['barcode'];
-      $pallets[] = $this->getPallet($barcode);
-    }
-
-    return $pallets;
-
-  }
-	
-
-
+	/**
+   * Get all products available in the database
+   *
+   * @return cookieNames The names of all the cookies available
+   */
   public function getProducts() {
 
     $sql = "select name from CookieTypes";
@@ -270,6 +227,11 @@ class Database {
 
   }
 
+  /**
+   * Get all barcodes available in the database
+   *
+   * @return barcodes The barcodes of all the pallets
+   */
   public function getAllBarcodes() {
 
     $sql = "select barcode from pallets";
@@ -283,6 +245,12 @@ class Database {
 
   }
 
+
+  /**
+   * Get all production dates available in the database
+   *
+   * @return dates All the dates when something was produced
+   */
   public function getAllProdDates() {
 
     $sql = "select distinct producedDate from pallets";
@@ -296,6 +264,11 @@ class Database {
 
   }
 
+  /**
+   * Get all possible locations for a pallet
+   *
+   * @return locations The possible locations for a pallet
+   */
   public function getAllLocations() {
 
     $sql = "select location from Locations";
@@ -312,8 +285,13 @@ class Database {
   /**
    * A more general search method
    * 
-   *
-   * @param 
+   * @param barcode The barcode to be search. "--All--" if all included
+   * @param location The location wanted. "--All--" if all included
+   * @param blocked True or False. "--All--" if all included
+   * @param date The wanted date to be searched. "--All--" if all included
+   * @param startTime The start time of a time intervall
+   * @param endTime The end time of a time intervall
+   * @param cookieName The name of the wanted product
    * @return barcodes
    */
   public function generalSearch($barcode,$location,$blocked,$date,$startTime,$endTime,$cookieName) {
