@@ -54,6 +54,7 @@ We will also create a screen that simulated production, so that the system can b
 
 \section*{Requirements}
 Even though the requirements were a bit diffuse (as intended) we are fairly confident that we have met all of them. 
+% Some more details here on what requierments we met and which we skipped?
 \section*{Outline of the System}
 The system is constructed in a way much similar to the system in lab 4. 
 The database manager MySQL is used to manage the database, located on \url{puccini.cs.lth.se}. 
@@ -74,18 +75,18 @@ The newly created methods for this assignment are:
   \item \textbf{producePallet(\$date, \$time, \$name)} simulates the production of a pallet.
   \item \textbf{getPallet(\$barcode)} returns a php pallet object with information from the corresponding pallet tuple in Pallets.
   \item \textbf{blockIntervall(\$product, \$date, \$startTime, \$endTime)} finds all pallets meeting the criteria, blocks them and returns them.
-  \item \textbf{generalSearch} handles all searching requested by the user.
+  \item \textbf{generalSearch()} handles all searching requested by the user.
 \end{itemize}
 There are also methods for getting all locations, production dates, barcodes and products, used for generating dropdown menus in the user interface. 
 The class \textbf{database.inc.php} is quite well commented, have a look there for more details.
 
 The pallet class only consists of variables, a constructor and getters.
 
-
+\subsection*{Web interface}
 
 The interface consists of 8 views. The first view that the user ecounters is the login page. This is a simple view that only has as purporse to login to to the database. The view can be seen below 
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   	\begin{subfigure}[b]{0.45\textwidth}
     	\includegraphics[width=\textwidth]{figures/view_login.png}
@@ -100,13 +101,15 @@ The interface consists of 8 views. The first view that the user ecounters is the
  		\caption{First views}
 \end{figure}
 
-The user can then navigate on to one of the three options given, \emph{Search, Block Pallet(s)} or \emph{Simulate Production}. Each one of them has one input view where the user can provide the program with suitable input and the submit. The user is the provided with a result view to see what happend according to the given input.
+The user can then navigate on to one of the three options given, \emph{Search, Block Pallet(s)} or \emph{Simulate Production}. Each one of them has one input view where the user can provide the program with suitable input and then submit. The user is then provided with a result view to see what happend according to the given input.
 
 \subsection*{Searching}
 
-In the searching view the user can choose to search on different parameters. Each parameter can be left as \emph{All} or set to a specific value. This gives the user the possibility to define thier search as they want. An example of the search view and the result is given below
+In the searching view the user can choose to search on different parameters. Each parameter can be left as \emph{All} or set to a specific value. This gives the user the possibility to define their search as they want. An example of the search view and the result is given below in figure \ref{figure:viewSR}.
 
-\begin{figure}[h]
+\newpage
+
+\begin{figure}[h!]
   \centering
   	\begin{subfigure}[b]{0.45\textwidth}
     	\includegraphics[width=\textwidth]{figures/view_search.png}
@@ -119,14 +122,15 @@ In the searching view the user can choose to search on different parameters. Eac
     	\caption{Search results}
  		\end{subfigure} 
  		\caption{Views for searching}
+    \label{figure:viewSR}
 \end{figure}
 
 
 \subsection*{Blocking}
 
-When the user wants to block pallets in a certain time intervall containing a certain product they can go to the block view. The user is the asked to choose which product they want to block and then a production date and time intervall to block all pallets with that product. The result of the request is the displayed in the next view. The user is provided with information on how many pallets that where blocked but also pallets in the intervall that are already blocked are displayed.
+When the user wants to block pallets in a certain time intervall containing a certain product they can go to the block view. The user is then asked to choose which product they want to block. After that a production date and time intervall to block all pallets with that product. The result of the request is the displayed in the next view. The user is provided with information on how many pallets that where blocked but also pallets in the intervall that are already blocked are displayed. See figure \ref{figure:view_blocking}
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   	\begin{subfigure}[b]{0.45\textwidth}
     	\includegraphics[width=\textwidth]{figures/view_block.png}
@@ -139,13 +143,14 @@ When the user wants to block pallets in a certain time intervall containing a ce
     	\caption{Result view for blocking pallets}
  		\end{subfigure} 
  		\caption{Views for blocking pallets}
+    \label{figure:view_blocking}
 \end{figure}
 
 \subsection*{Simulate production}
 
-To simulate the production of a new pallet the user can enter a view where one can choose which product one wants to produce and then what date and time it should be done. The result can then be seen in the result if a pallet is produced is that the user get the barcode for the produced pallet back. The views can be seen below.
+To simulate the production of a new pallet the user can enter a view where one can choose which product one wants to produce and then what date and time it should be done. If the production is successfull the user get the barcode for the produced pallet display, if not a message saying that something went wrong. See figure \ref{figure:viewPR}
 
-\begin{figure}[h]
+\begin{figure}[h!]
   \centering
   	\begin{subfigure}[b]{0.45\textwidth}
     	\includegraphics[width=\textwidth]{figures/view_produce.png}
@@ -158,8 +163,10 @@ To simulate the production of a new pallet the user can enter a view where one c
     	\caption{View for the main page}
  		\end{subfigure} 
  		\caption{Views for simulated production}
+    \label{figure:viewPR}
 \end{figure}
 
+\newpage
 \section*{E/R Diagram}
 
 \begin{figure}[h!]
@@ -180,30 +187,7 @@ The following SQL statements were used to create the database:
 \lstinputlisting[label={tables.sql},caption={tables.sql},lastline=83]{../tables.sql}
 \section*{User's manual}
 We consider the system self--explanatory enough not to require an user manual. 
-The system has, in fact, been tested on a med--student with great success.
-The only things worth pointing out are that:
+The system has, in fact, been tested on a medical--student with great success. See the \textbf{README.md} file on how to test the program.
 
-\begin{enumerate}
-  \item This thing
-  \item This thing
-  \item And this thing
-\end{enumerate}
-
-% \setcounter{section}{1}
-% \section*{Task 1}
-% \input{../task1/task1.tex}
-
-
-
-
-
-
-% \begin{thebibliography}{9}
-    
-%   \bibitem{cb}
-%     B. Kolman, R. E. Beck, \emph{Elementary Linear Programming with Applications}.
-%     2nd edition. Academic Press, San Diego, 1995,
-
-% \end{thebibliography}
 
 \end{document}
