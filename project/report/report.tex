@@ -9,6 +9,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{wrapfig}
+\usepackage{verbatim}
 \usepackage{listings}
 \usepackage{fancyhdr}
 %\usepackage[]{mcode} % \lstinputlisting[firstline=300,lastline=500]{file.m}
@@ -47,6 +48,17 @@
 \section*{Requirements}
 Even though the requirements were a bit diffuse (as intended) we are fairly confident that we have met all of them. 
 \section*{Outline of the System}
+The system is constructed in a way much similar to the system in lab 4. 
+The database manager MySQL is used to manage the database, located on \url{puccini.cs.lth.se}. 
+The creation and population of the database is performed by sourcing the file \textbf{tables.sql}, the creation is described in listing \ref{tables.sql}.
+
+The factory interface is a web page written in PHP. 
+The php tool PDO was used to establish a connection to the database. 
+The PHP class \textbf{database.inc.php} handles everything related to the SQL database, and the PHP class \textbf{pallet.inc.php} is used to transmit data from the database class to the webpage.
+
+
+
+The interface consists of X views. tk explain them
 \section*{E/R Diagram}
 
 \begin{figure}[h!]
@@ -64,7 +76,7 @@ The following relations were the basis for creating the database:
 \section*{SQL Statements}
 The following SQL statements were used to create the database:
 
-\lstinputlisting[lastline=83]{../tables.sql}
+\lstinputlisting[label={tables.sql},caption={tables.sql},lastline=83]{../tables.sql}
 \section*{User's manual}
 We consider the system self--explanatory enough not to require an user manual. 
 The system has, in fact, been tested on a med--student with great success.
